@@ -46,6 +46,5 @@ def notification(request):
 #################################################################################################################################################################################
 
 #Profile page view function
-@login_required(login_url='/accounts/login/')
 def profile(request):
-    return render(request, 'instaplate/userprofile.html')
+    return render(request, 'display/userprofile.html')
