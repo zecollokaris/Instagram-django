@@ -8,8 +8,8 @@ import datetime
 
 #import Image resizers, (Can translate large image to a small one when 
 # called in another location where it is needed in a smaller version.)  
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+
+
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -35,10 +35,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=30)
     bio = models.CharField(max_length=350) 
     profile_pic = models.ImageField(upload_to='ProfilePicture/')
-    profile_avatar = ImageSpecField(source='profile_pic',
-                                         processors=[ResizeToFill(100, 50)],
-                                         format='JPEG''PNG''GIF''JPG',
-                                         options={'quality':60})
+    profile_avatar = models.ImageField(upload_to='AvatorPicture/')
     date = models.DateTimeField(auto_now_add=True, null= True)  
 
 
