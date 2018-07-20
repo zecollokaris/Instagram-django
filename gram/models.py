@@ -79,3 +79,34 @@ class Image(models.Model):
     '''Method to filter database results'''
     def __str__(self):
         return self.image_caption
+
+
+#################################################################################################################################################################################################################################
+
+
+
+#...Class Comments added here...
+
+
+class Comments (models.Model):
+#Attribute Variables for COMMENTS class to represent different columns in database
+    '''
+    -comment-: this is the commentstext which will be uploaded
+    -author-: this is the writer of the comment
+    -commented_image-: this is the image that has been commented on
+    date-: this is the date the comment was posted
+    '''
+    comment_post = models.CharField(max_length=150)
+    author = models.ForeignKey('Profile',related_name='commenter' , on_delete=models.CASCADE)
+    commented_image = models.ForeignKey('Image', on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    '''Method to filter database results'''
+    def __str__(self):
+        return self.author
+    
+
+
+
+#################################################################################################################################################################################################################################
+
