@@ -2,25 +2,36 @@
 Serialize data to/from JSON
 """
 
+# Avoid shadowing the standard library json module
+from __future__ import absolute_import, unicode_literals
+
 import datetime
 import decimal
 import json
+import sys
 import uuid
 
 from django.core.serializers.base import DeserializationError
 from django.core.serializers.python import (
     Deserializer as PythonDeserializer, Serializer as PythonSerializer,
 )
+from django.utils import six
+from django.utils.deprecation import CallableBool
 from django.utils.duration import duration_iso_string
 from django.utils.functional import Promise
 from django.utils.timezone import is_aware
 
 
 class Serializer(PythonSerializer):
-    """Convert a queryset to JSON."""
+    """
+    Convert a queryset to JSON.
+    """
     internal_use_only = False
 
     def _init_options(self):
+        if json.__version__.split('.') >= ['2', '1', '3']:
+            # Use JS strings to represent Python Decimal instances (ticket #16850)
+            self.options.update({'use_decimal': False})
         self._current = None
         self.json_kwargs = self.options.copy()
         self.json_kwargs.pop('stream', None)
@@ -54,29 +65,32 @@ class Serializer(PythonSerializer):
         self._current = None
 
     def getvalue(self):
-        # Grandparent super
+        # Grand-parent super
         return super(PythonSerializer, self).getvalue()
 
 
 def Deserializer(stream_or_string, **options):
-    """Deserialize a stream or string of JSON data."""
-    if not isinstance(stream_or_string, (bytes, str)):
+    """
+    Deserialize a stream or string of JSON data.
+    """
+    if not isinstance(stream_or_string, (bytes, six.string_types)):
         stream_or_string = stream_or_string.read()
     if isinstance(stream_or_string, bytes):
-        stream_or_string = stream_or_string.decode()
+        stream_or_string = stream_or_string.decode('utf-8')
     try:
         objects = json.loads(stream_or_string)
-        yield from PythonDeserializer(objects, **options)
-    except (GeneratorExit, DeserializationError):
+        for obj in PythonDeserializer(objects, **options):
+            yield obj
+    except GeneratorExit:
         raise
-    except Exception as exc:
-        raise DeserializationError() from exc
+    except Exception as e:
+        # Map to deserializer error
+        six.reraise(DeserializationError, DeserializationError(e), sys.exc_info()[2])
 
 
 class DjangoJSONEncoder(json.JSONEncoder):
     """
-    JSONEncoder subclass that knows how to encode date/time, decimal types, and
-    UUIDs.
+    JSONEncoder subclass that knows how to encode date/time, decimal types and UUIDs.
     """
     def default(self, o):
         # See "Date Time String Format" in the ECMA-262 specification.
@@ -98,7 +112,13 @@ class DjangoJSONEncoder(json.JSONEncoder):
             return r
         elif isinstance(o, datetime.timedelta):
             return duration_iso_string(o)
-        elif isinstance(o, (decimal.Decimal, uuid.UUID, Promise)):
+        elif isinstance(o, decimal.Decimal):
             return str(o)
+        elif isinstance(o, uuid.UUID):
+            return str(o)
+        elif isinstance(o, Promise):
+            return six.text_type(o)
+        elif isinstance(o, CallableBool):
+            return bool(o)
         else:
-            return super().default(o)
+            return super(DjangoJSONEncoder, self).default(o)

@@ -2,7 +2,7 @@
 # the template system can understand.
 
 
-class PermLookupDict:
+class PermLookupDict(object):
     def __init__(self, user, app_label):
         self.user, self.app_label = user, app_label
 
@@ -20,8 +20,11 @@ class PermLookupDict:
     def __bool__(self):
         return self.user.has_module_perms(self.app_label)
 
+    def __nonzero__(self):      # Python 2 compatibility
+        return type(self).__bool__(self)
 
-class PermWrapper:
+
+class PermWrapper(object):
     def __init__(self, user):
         self.user = user
 
@@ -45,10 +48,10 @@ class PermWrapper:
 
 def auth(request):
     """
-    Return context variables required by apps that use Django's authentication
+    Returns context variables required by apps that use Django's authentication
     system.
 
-    If there is no 'user' attribute in the request, use AnonymousUser (from
+    If there is no 'user' attribute in the request, uses AnonymousUser (from
     django.contrib.auth).
     """
     if hasattr(request, 'user'):

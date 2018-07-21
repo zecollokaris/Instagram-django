@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from .. import Tags, Warning, register
+from ..utils import patch_middleware_message
 
 
 def add_session_cookie_message(message):
@@ -70,7 +71,7 @@ def check_session_cookie_secure(app_configs, **kwargs):
         if _session_app():
             errors.append(W010)
         if _session_middleware():
-            errors.append(W011)
+            errors.append(patch_middleware_message(W011))
         if len(errors) > 1:
             errors = [W012]
     return errors
@@ -83,14 +84,15 @@ def check_session_cookie_httponly(app_configs, **kwargs):
         if _session_app():
             errors.append(W013)
         if _session_middleware():
-            errors.append(W014)
+            errors.append(patch_middleware_message(W014))
         if len(errors) > 1:
             errors = [W015]
     return errors
 
 
 def _session_middleware():
-    return 'django.contrib.sessions.middleware.SessionMiddleware' in settings.MIDDLEWARE
+    return ("django.contrib.sessions.middleware.SessionMiddleware" in settings.MIDDLEWARE_CLASSES or
+            settings.MIDDLEWARE and "django.contrib.sessions.middleware.SessionMiddleware" in settings.MIDDLEWARE)
 
 
 def _session_app():

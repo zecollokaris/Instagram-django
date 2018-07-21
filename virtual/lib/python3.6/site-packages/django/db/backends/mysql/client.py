@@ -14,9 +14,7 @@ class DatabaseClient(BaseDatabaseClient):
         passwd = settings_dict['OPTIONS'].get('passwd', settings_dict['PASSWORD'])
         host = settings_dict['OPTIONS'].get('host', settings_dict['HOST'])
         port = settings_dict['OPTIONS'].get('port', settings_dict['PORT'])
-        server_ca = settings_dict['OPTIONS'].get('ssl', {}).get('ca')
-        client_cert = settings_dict['OPTIONS'].get('ssl', {}).get('cert')
-        client_key = settings_dict['OPTIONS'].get('ssl', {}).get('key')
+        cert = settings_dict['OPTIONS'].get('ssl', {}).get('ca')
         defaults_file = settings_dict['OPTIONS'].get('read_default_file')
         # Seems to be no good way to set sql_mode with CLI.
 
@@ -33,12 +31,8 @@ class DatabaseClient(BaseDatabaseClient):
                 args += ["--host=%s" % host]
         if port:
             args += ["--port=%s" % port]
-        if server_ca:
-            args += ["--ssl-ca=%s" % server_ca]
-        if client_cert:
-            args += ["--ssl-cert=%s" % client_cert]
-        if client_key:
-            args += ["--ssl-key=%s" % client_key]
+        if cert:
+            args += ["--ssl-ca=%s" % cert]
         if db:
             args += [db]
         return args

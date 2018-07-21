@@ -1,11 +1,14 @@
+from __future__ import unicode_literals
+
 from django.db import router
+from django.utils import six
 
 from .base import Operation
 
 
 class SeparateDatabaseAndState(Operation):
     """
-    Take two lists of operations - ones that will be used for the database,
+    Takes two lists of operations - ones that will be used for the database,
     and ones that will be used for the state change. This allows operations
     that don't support state change to have it applied, or have operations
     that affect the state or not the database, or so on.
@@ -24,7 +27,7 @@ class SeparateDatabaseAndState(Operation):
         if self.state_operations:
             kwargs['state_operations'] = self.state_operations
         return (
-            self.__class__.__qualname__,
+            self.__class__.__name__,
             [],
             kwargs
         )
@@ -62,9 +65,9 @@ class SeparateDatabaseAndState(Operation):
 
 class RunSQL(Operation):
     """
-    Run some raw SQL. A reverse SQL statement may be provided.
+    Runs some raw SQL. A reverse SQL statement may be provided.
 
-    Also accept a list of operations that represent the state change effected
+    Also accepts a list of operations that represent the state change effected
     by this SQL change, in case it's custom column/table creation/deletion.
     """
     noop = ''
@@ -87,7 +90,7 @@ class RunSQL(Operation):
         if self.hints:
             kwargs['hints'] = self.hints
         return (
-            self.__class__.__qualname__,
+            self.__class__.__name__,
             [],
             kwargs
         )
@@ -132,7 +135,7 @@ class RunSQL(Operation):
 
 class RunPython(Operation):
     """
-    Run Python code in a context suitable for doing versioned ORM operations.
+    Runs Python code in a context suitable for doing versioned ORM operations.
     """
 
     reduces_to_sql = False
@@ -164,7 +167,7 @@ class RunPython(Operation):
         if self.hints:
             kwargs['hints'] = self.hints
         return (
-            self.__class__.__qualname__,
+            self.__class__.__name__,
             [],
             kwargs
         )
@@ -201,3 +204,11 @@ class RunPython(Operation):
     @staticmethod
     def noop(apps, schema_editor):
         return None
+
+
+# Allow migrations using RunPython.noop to be squashed on Python 2 (it doesn't
+# support serializing unbound methods so install a module function instead).
+if six.PY2:
+    def noop(apps, schema_editor):
+        return None
+    RunPython.noop = staticmethod(noop)

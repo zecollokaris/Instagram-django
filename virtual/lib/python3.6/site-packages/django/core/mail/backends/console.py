@@ -5,19 +5,21 @@ import sys
 import threading
 
 from django.core.mail.backends.base import BaseEmailBackend
+from django.utils import six
 
 
 class EmailBackend(BaseEmailBackend):
     def __init__(self, *args, **kwargs):
         self.stream = kwargs.pop('stream', sys.stdout)
         self._lock = threading.RLock()
-        super().__init__(*args, **kwargs)
+        super(EmailBackend, self).__init__(*args, **kwargs)
 
     def write_message(self, message):
         msg = message.message()
         msg_data = msg.as_bytes()
-        charset = msg.get_charset().get_output_charset() if msg.get_charset() else 'utf-8'
-        msg_data = msg_data.decode(charset)
+        if six.PY3:
+            charset = msg.get_charset().get_output_charset() if msg.get_charset() else 'utf-8'
+            msg_data = msg_data.decode(charset)
         self.stream.write('%s\n' % msg_data)
         self.stream.write('-' * 79)
         self.stream.write('\n')

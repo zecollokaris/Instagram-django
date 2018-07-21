@@ -10,32 +10,36 @@ Usage:
 7th October 2003 11:39
 >>>
 """
+from __future__ import unicode_literals
+
 import calendar
 import datetime
 import re
 import time
 
+from django.utils import six
 from django.utils.dates import (
     MONTHS, MONTHS_3, MONTHS_ALT, MONTHS_AP, WEEKDAYS, WEEKDAYS_ABBR,
 )
+from django.utils.encoding import force_text
 from django.utils.timezone import get_default_timezone, is_aware, is_naive
-from django.utils.translation import gettext as _
+from django.utils.translation import ugettext as _
 
 re_formatchars = re.compile(r'(?<!\\)([aAbBcdDeEfFgGhHiIjlLmMnNoOPrsStTUuwWyYzZ])')
 re_escaped = re.compile(r'\\(.)')
 
 
-class Formatter:
+class Formatter(object):
     def format(self, formatstr):
         pieces = []
-        for i, piece in enumerate(re_formatchars.split(str(formatstr))):
+        for i, piece in enumerate(re_formatchars.split(force_text(formatstr))):
             if i % 2:
                 if type(self.data) is datetime.date and hasattr(TimeFormat, piece):
                     raise TypeError(
                         "The format for date objects may not contain "
                         "time-related format specifiers (found '%s')." % piece
                     )
-                pieces.append(str(getattr(self, piece)()))
+                pieces.append(force_text(getattr(self, piece)()))
             elif piece:
                 pieces.append(re_escaped.sub(r'\1', piece))
         return ''.join(pieces)
@@ -76,14 +80,17 @@ class TimeFormat(Formatter):
         """
         Timezone name.
 
-        If timezone information is not available, return an empty string.
+        If timezone information is not available, this method returns
+        an empty string.
         """
         if not self.timezone:
             return ""
 
         try:
             if hasattr(self.data, 'tzinfo') and self.data.tzinfo:
-                return self.data.tzname() or ''
+                # Have to use tzinfo.tzname and not datetime.tzname
+                # because datatime.tzname does not expect Unicode
+                return self.data.tzinfo.tzname(self.data) or ""
         except NotImplementedError:
             pass
         return ""
@@ -127,7 +134,8 @@ class TimeFormat(Formatter):
         """
         Difference to Greenwich time in hours; e.g. '+0200', '-0430'.
 
-        If timezone information is not available, return an empty string.
+        If timezone information is not available, this method returns
+        an empty string.
         """
         if not self.timezone:
             return ""
@@ -160,7 +168,8 @@ class TimeFormat(Formatter):
         """
         Time zone of this machine; e.g. 'EST' or 'MDT'.
 
-        If timezone information is not available, return an empty string.
+        If timezone information is not available, this method returns
+        an empty string.
         """
         if not self.timezone:
             return ""
@@ -175,7 +184,7 @@ class TimeFormat(Formatter):
             pass
         if name is None:
             name = self.format('O')
-        return str(name)
+        return six.text_type(name)
 
     def u(self):
         "Microseconds; i.e. '000000' to '999999'"
@@ -187,7 +196,8 @@ class TimeFormat(Formatter):
         timezones west of UTC is always negative, and for those east of UTC is
         always positive.
 
-        If timezone information is not available, return an empty string.
+        If timezone information is not available, this method returns
+        an empty string.
         """
         if not self.timezone:
             return ""
@@ -341,7 +351,7 @@ class DateFormat(TimeFormat):
 
     def y(self):
         "Year, 2 digits; e.g. '99'"
-        return str(self.data.year)[2:]
+        return six.text_type(self.data.year)[2:]
 
     def Y(self):
         "Year, 4 digits; e.g. '1999'"

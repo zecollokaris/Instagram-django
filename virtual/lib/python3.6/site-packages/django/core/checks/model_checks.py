@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import inspect
 import types
 from itertools import chain
@@ -64,7 +67,7 @@ def _check_lazy_references(apps, ignore=None):
         operation, args, keywords = obj, [], {}
         while hasattr(operation, 'func'):
             # The or clauses are redundant but work around a bug (#25945) in
-            # functools.partial in Python <= 3.5.1.
+            # functools.partial in Python 3 <= 3.5.1 and Python 2 <= 2.7.11.
             args.extend(getattr(operation, 'args', []) or [])
             keywords.update(getattr(operation, 'keywords', {}) or {})
             operation = operation.func

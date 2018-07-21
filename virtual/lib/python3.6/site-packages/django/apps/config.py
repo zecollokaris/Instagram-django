@@ -2,20 +2,23 @@ import os
 from importlib import import_module
 
 from django.core.exceptions import ImproperlyConfigured
+from django.utils._os import upath
 from django.utils.module_loading import module_has_submodule
 
 MODELS_MODULE_NAME = 'models'
 
 
-class AppConfig:
-    """Class representing a Django application and its configuration."""
+class AppConfig(object):
+    """
+    Class representing a Django application and its configuration.
+    """
 
     def __init__(self, app_name, app_module):
-        # Full Python path to the application e.g. 'django.contrib.admin'.
+        # Full Python path to the application eg. 'django.contrib.admin'.
         self.name = app_name
 
-        # Root module for the application e.g. <module 'django.contrib.admin'
-        # from 'django/contrib/admin/__init__.py'>.
+        # Root module for the application eg. <module 'django.contrib.admin'
+        # from 'django/contrib/admin/__init__.pyc'>.
         self.module = app_module
 
         # Reference to the Apps registry that holds this AppConfig. Set by the
@@ -25,22 +28,23 @@ class AppConfig:
         # The following attributes could be defined at the class level in a
         # subclass, hence the test-and-set pattern.
 
-        # Last component of the Python path to the application e.g. 'admin'.
+        # Last component of the Python path to the application eg. 'admin'.
         # This value must be unique across a Django project.
         if not hasattr(self, 'label'):
             self.label = app_name.rpartition(".")[2]
 
-        # Human-readable name for the application e.g. "Admin".
+        # Human-readable name for the application eg. "Admin".
         if not hasattr(self, 'verbose_name'):
             self.verbose_name = self.label.title()
 
-        # Filesystem path to the application directory e.g.
-        # '/path/to/django/contrib/admin'.
+        # Filesystem path to the application directory eg.
+        # u'/usr/lib/python2.7/dist-packages/django/contrib/admin'. Unicode on
+        # Python 2 and a str on Python 3.
         if not hasattr(self, 'path'):
             self.path = self._path_from_module(app_module)
 
-        # Module containing models e.g. <module 'django.contrib.admin.models'
-        # from 'django/contrib/admin/models.py'>. Set by import_models().
+        # Module containing models eg. <module 'django.contrib.admin.models'
+        # from 'django/contrib/admin/models.pyc'>. Set by import_models().
         # None if the application doesn't have a models module.
         self.models_module = None
 
@@ -55,8 +59,8 @@ class AppConfig:
         """Attempt to determine app's filesystem path from its module."""
         # See #21874 for extended discussion of the behavior of this method in
         # various cases.
-        # Convert paths to list because Python's _NamespacePath doesn't support
-        # indexing.
+        # Convert paths to list because Python 3's _NamespacePath does not
+        # support indexing.
         paths = list(getattr(module, '__path__', []))
         if len(paths) != 1:
             filename = getattr(module, '__file__', None)
@@ -76,7 +80,7 @@ class AppConfig:
                 "The app module %r has no filesystem location, "
                 "you must configure this app with an AppConfig subclass "
                 "with a 'path' class attribute." % (module,))
-        return paths[0]
+        return upath(paths[0])
 
     @classmethod
     def create(cls, entry):
@@ -153,9 +157,9 @@ class AppConfig:
 
     def get_model(self, model_name, require_ready=True):
         """
-        Return the model with the given case-insensitive model_name.
+        Returns the model with the given case-insensitive model_name.
 
-        Raise LookupError if no model exists with this name.
+        Raises LookupError if no model exists with this name.
         """
         if require_ready:
             self.apps.check_models_ready()
@@ -169,7 +173,7 @@ class AppConfig:
 
     def get_models(self, include_auto_created=False, include_swapped=False):
         """
-        Return an iterable of models.
+        Returns an iterable of models.
 
         By default, the following models aren't included:
 

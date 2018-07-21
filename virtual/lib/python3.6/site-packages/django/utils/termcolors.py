@@ -2,6 +2,8 @@
 termcolors.py
 """
 
+from django.utils import six
+
 color_names = ('black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white')
 foreground = {color_names[x]: '3%s' % x for x in range(8)}
 background = {color_names[x]: '4%s' % x for x in range(8)}
@@ -12,12 +14,12 @@ opt_dict = {'bold': '1', 'underscore': '4', 'blink': '5', 'reverse': '7', 'conce
 
 def colorize(text='', opts=(), **kwargs):
     """
-    Return your text, enclosed in ANSI graphics codes.
+    Returns your text, enclosed in ANSI graphics codes.
 
     Depends on the keyword arguments 'fg' and 'bg', and the contents of
     the opts tuple/list.
 
-    Return the RESET code if no parameters are given.
+    Returns the RESET code if no parameters are given.
 
     Valid colors:
         'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'
@@ -42,7 +44,7 @@ def colorize(text='', opts=(), **kwargs):
     code_list = []
     if text == '' and len(opts) == 1 and opts[0] == 'reset':
         return '\x1b[%sm' % RESET
-    for k, v in kwargs.items():
+    for k, v in six.iteritems(kwargs):
         if k == 'fg':
             code_list.append(foreground[v])
         elif k == 'bg':
@@ -57,7 +59,7 @@ def colorize(text='', opts=(), **kwargs):
 
 def make_style(opts=(), **kwargs):
     """
-    Return a function with default parameters for colorize()
+    Returns a function with default parameters for colorize()
 
     Example:
         bold_red = make_style(opts=('bold',), fg='red')
@@ -199,7 +201,7 @@ def parse_color_setting(config_string):
                 definition['bg'] = colors[-1]
 
             # All remaining instructions are options
-            opts = tuple(s for s in styles if s in opt_dict)
+            opts = tuple(s for s in styles if s in opt_dict.keys())
             if opts:
                 definition['opts'] = opts
 

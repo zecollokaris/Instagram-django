@@ -8,15 +8,22 @@ __all__ = [
 
 
 class StatAggregate(Aggregate):
-    output_field = FloatField()
-
-    def __init__(self, y, x, output_field=None, filter=None):
+    def __init__(self, y, x, output_field=FloatField()):
         if not x or not y:
             raise ValueError('Both y and x must be provided.')
-        super().__init__(y, x, output_field=output_field, filter=filter)
+        super(StatAggregate, self).__init__(y=y, x=x, output_field=output_field)
+        self.x = x
+        self.y = y
+        self.source_expressions = self._parse_expressions(self.y, self.x)
+
+    def get_source_expressions(self):
+        return self.y, self.x
+
+    def set_source_expressions(self, exprs):
+        self.y, self.x = exprs
 
     def resolve_expression(self, query=None, allow_joins=True, reuse=None, summarize=False, for_save=False):
-        return super().resolve_expression(query, allow_joins, reuse, summarize)
+        return super(Aggregate, self).resolve_expression(query, allow_joins, reuse, summarize)
 
 
 class Corr(StatAggregate):
@@ -24,9 +31,9 @@ class Corr(StatAggregate):
 
 
 class CovarPop(StatAggregate):
-    def __init__(self, y, x, sample=False, filter=None):
+    def __init__(self, y, x, sample=False):
         self.function = 'COVAR_SAMP' if sample else 'COVAR_POP'
-        super().__init__(y, x, filter=filter)
+        super(CovarPop, self).__init__(y, x)
 
 
 class RegrAvgX(StatAggregate):
@@ -39,10 +46,14 @@ class RegrAvgY(StatAggregate):
 
 class RegrCount(StatAggregate):
     function = 'REGR_COUNT'
-    output_field = IntegerField()
 
-    def convert_value(self, value, expression, connection):
-        return 0 if value is None else value
+    def __init__(self, y, x):
+        super(RegrCount, self).__init__(y=y, x=x, output_field=IntegerField())
+
+    def convert_value(self, value, expression, connection, context):
+        if value is None:
+            return 0
+        return int(value)
 
 
 class RegrIntercept(StatAggregate):

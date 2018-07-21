@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import django.contrib.auth.models
 from django.contrib.auth import validators
 from django.db import migrations, models
-from django.utils import timezone
+from django.utils import six, timezone
 
 
 class Migration(migrations.Migration):
@@ -26,7 +29,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('content_type__app_label', 'content_type__model', 'codename'),
-                'unique_together': {('content_type', 'codename')},
+                'unique_together': set([('content_type', 'codename')]),
                 'verbose_name': 'permission',
                 'verbose_name_plural': 'permissions',
             },
@@ -63,7 +66,9 @@ class Migration(migrations.Migration):
                 ('username', models.CharField(
                     help_text='Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.', unique=True,
                     max_length=30, verbose_name='username',
-                    validators=[validators.UnicodeUsernameValidator()],
+                    validators=[
+                        validators.UnicodeUsernameValidator() if six.PY3 else validators.ASCIIUsernameValidator()
+                    ],
                 )),
                 ('first_name', models.CharField(max_length=30, verbose_name='first name', blank=True)),
                 ('last_name', models.CharField(max_length=30, verbose_name='last name', blank=True)),

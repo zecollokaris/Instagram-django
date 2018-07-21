@@ -1,7 +1,6 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
-# Edgars Voroboks <nullisnot0@inbox.lv>, 2017
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Māris Nartišs <maris.gis@gmail.com>, 2016
 msgid ""
@@ -9,8 +8,8 @@ msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-19 16:49+0100\n"
-"PO-Revision-Date: 2017-11-18 11:29+0000\n"
-"Last-Translator: Edgars Voroboks <nullisnot0@inbox.lv>\n"
+"PO-Revision-Date: 2017-01-20 09:34+0000\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Latvian (http://www.transifex.com/django/django/language/"
 "lv/)\n"
 "MIME-Version: 1.0\n"
@@ -40,10 +39,6 @@ msgid ""
 "click the link and add it to your bookmarks. Now you can select the "
 "bookmarklet from any page in the site."
 msgstr ""
-"Lai instalētu bukmarkletu, velciet saiti uz grāmatzīmju rīkjoslu, vai ar "
-"peles labo pogu noklikšķiniet uz saites un pievienojiet to savām "
-"grāmatzīmēm. Tagad jūs varat izvēlēties bukmarkletu no jebkuras vietnes "
-"lapas."
 
 msgid "Documentation for this page"
 msgstr "Dokumentācija šai lapai"
@@ -55,10 +50,10 @@ msgstr ""
 "Pārvieto no jebkuras lapas uz tā skata dokumentāciju, kas ģenerē šo lapu."
 
 msgid "Tags"
-msgstr "Tagi"
+msgstr ""
 
 msgid "List of all the template tags and their functions."
-msgstr "Visu šablonu tagu un to funkciju saraksts."
+msgstr ""
 
 msgid "Filters"
 msgstr "Filtri"
@@ -67,8 +62,6 @@ msgid ""
 "Filters are actions which can be applied to variables in a template to alter "
 "the output."
 msgstr ""
-"Filtri ir darbības, kuras var tikt pielietotas šablona mainīgajiem, lai "
-"mainītu izvades rezultātu."
 
 msgid "Models"
 msgstr "Modeļi"
@@ -78,8 +71,6 @@ msgid ""
 "associated fields. Each model has a list of fields which can be accessed as "
 "template variables"
 msgstr ""
-"Modeļi ir visu sistēmas objektu un to saistīto lauku apraksti. Katram "
-"modelim ir saraksts ar laukiem, kuriem var piekļūt kā šablonu mainīgajiem"
 
 msgid "Views"
 msgstr "Skati"
@@ -89,29 +80,23 @@ msgid ""
 "template is used to generate the page and which objects are available to "
 "that template."
 msgstr ""
-"Katru lapu publiskajā vietnē ģenerē skats. Skats nosaka, kuru šablonu "
-"izmanto lapas ģenerēšanai un kādi objekti ir pieejami šim šablonam."
 
 msgid "Tools for your browser to quickly access admin functionality."
 msgstr ""
-"Rīki Jūsu pārlūkprogrammai, lai ātri piekļūtu administratora "
-"funkcionalitātei."
 
 msgid "Please install docutils"
-msgstr "Lūdzu instalējiet 'docutils'"
+msgstr ""
 
 #, python-format
 msgid ""
 "The admin documentation system requires Python's <a href=\"%(link)s"
 "\">docutils</a> library."
 msgstr ""
-"Administratora dokumentācijas sistēmai ir nepieciešama Python <a href="
-"\"%(link)s\">docutils</a>  bibliotēka."
 
 #, python-format
 msgid ""
 "Please ask your administrators to install <a href=\"%(link)s\">docutils</a>."
-msgstr "Palūdziet administratoram instalēt <a href=\"%(link)s\">docutils</a>."
+msgstr ""
 
 #, python-format
 msgid "Model: %(name)s"
@@ -139,7 +124,7 @@ msgid "Arguments"
 msgstr "Parametrs"
 
 msgid "Back to Model documentation"
-msgstr "Atpakaļ uz Modeļu dokumentāciju"
+msgstr ""
 
 msgid "Model documentation"
 msgstr "Modeļu dokumentācija"
@@ -156,56 +141,52 @@ msgstr "Šablons: %(name)s"
 
 #, python-format
 msgid "Template: \"%(name)s\""
-msgstr "Šablona: \"%(name)s\""
+msgstr ""
 
 #. Translators: Search is not a verb here, it qualifies path (a search path)
 #, python-format
 msgid "Search path for template \"%(name)s\":"
-msgstr "Šablona \"%(name)s\" meklēšanas ceļš:"
+msgstr ""
 
 msgid "(does not exist)"
-msgstr "(neeksistē)"
+msgstr ""
 
 msgid "Back to Documentation"
-msgstr "Atpakaļ pie Dokumentācijas"
+msgstr ""
 
 msgid "Template filters"
-msgstr "Šablona filtri"
+msgstr ""
 
 msgid "Template filter documentation"
-msgstr "Šablona filtru dokumentācija"
+msgstr ""
 
 msgid "Built-in filters"
-msgstr "Iebūvētie filtri"
+msgstr ""
 
 #, python-format
 msgid ""
 "To use these filters, put <code>%(code)s</code> in your template before "
 "using the filter."
 msgstr ""
-"Lai izmantotu šos filtrus, ievietojiet <code>%(code)s</code> šablonā pirms "
-"filtra izmantošanas."
 
 msgid "Template tags"
-msgstr "Šablonu tagi"
+msgstr ""
 
 msgid "Template tag documentation"
-msgstr "Šablonu tagu dokumentācija"
+msgstr ""
 
 msgid "Built-in tags"
-msgstr "Iebūvētie tagi"
+msgstr ""
 
 #, python-format
 msgid ""
 "To use these tags, put <code>%(code)s</code> in your template before using "
 "the tag."
 msgstr ""
-"Lai izmantotu šos tagus, ievietojiet <code>%(code)s</code> šablonā pirms "
-"taga izmantošanas."
 
 #, python-format
 msgid "View: %(name)s"
-msgstr "View: %(name)s"
+msgstr ""
 
 msgid "Context:"
 msgstr "Konteksts:"
@@ -214,23 +195,23 @@ msgid "Templates:"
 msgstr "Šabloni:"
 
 msgid "Back to View documentation"
-msgstr "Atpakaļ pie Skatu dokumentācijas"
+msgstr ""
 
 msgid "View documentation"
-msgstr "Skatu dokumentācija"
+msgstr ""
 
 msgid "Jump to namespace"
-msgstr "Pāriet uz vārdtelpu"
+msgstr ""
 
 msgid "Empty namespace"
-msgstr "Tukša vārdtelpa"
+msgstr ""
 
 #, python-format
 msgid "Views by namespace %(name)s"
-msgstr "Skati pēc vārdtelpas %(name)s"
+msgstr ""
 
 msgid "Views by empty namespace"
-msgstr "Skati pēc tukšas vārdtelpas"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -238,9 +219,6 @@ msgid ""
 "    View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</"
 "code>.\n"
 msgstr ""
-"\n"
-"    Skata funkcija: <code>%(full_name)s</code>. Nosaukums: <code>"
-"%(url_name)s</code>.\n"
 
 msgid "tag:"
 msgstr "tags:"
@@ -253,7 +231,7 @@ msgstr "skats:"
 
 #, python-format
 msgid "App %(app_label)r not found"
-msgstr "Lietotne %(app_label)r netika atrasta"
+msgstr ""
 
 #, python-format
 msgid "Model %(model_name)r not found in app %(app_label)r"

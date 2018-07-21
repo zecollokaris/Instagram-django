@@ -1,19 +1,19 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
-# Daniel Ursache-Dogariu, 2011
+# Daniel Ursache-Dogariu <contact@danniel.net>, 2011
 # Denis Darii <denis.darii@gmail.com>, 2011
 # Ionel Cristian Mărieș <ionel.mc@gmail.com>, 2012
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Răzvan Ionescu <ionescu77@gmail.com>, 2015
-# Razvan Stefanescu <razvan.stefanescu@gmail.com>, 2016-2017
+# Razvan Stefanescu <razvan.stefanescu@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-17 23:12+0200\n"
-"PO-Revision-Date: 2017-09-19 16:41+0000\n"
-"Last-Translator: Razvan Stefanescu <razvan.stefanescu@gmail.com>\n"
+"PO-Revision-Date: 2016-05-21 10:11+0000\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Romanian (http://www.transifex.com/django/django/language/"
 "ro/)\n"
 "MIME-Version: 1.0\n"
@@ -157,68 +157,68 @@ msgid "Tomorrow"
 msgstr "Mâine"
 
 msgid "January"
-msgstr "Ianuarie"
+msgstr ""
 
 msgid "February"
-msgstr "Februarie"
+msgstr ""
 
 msgid "March"
-msgstr "Martie"
+msgstr ""
 
 msgid "April"
-msgstr "Aprilie"
+msgstr ""
 
 msgid "May"
-msgstr "Mai"
+msgstr ""
 
 msgid "June"
-msgstr "Iunie"
+msgstr ""
 
 msgid "July"
-msgstr "Iulie"
+msgstr ""
 
 msgid "August"
-msgstr "August"
+msgstr ""
 
 msgid "September"
-msgstr "Septembrie"
+msgstr ""
 
 msgid "October"
-msgstr "Octombrie"
+msgstr ""
 
 msgid "November"
-msgstr "Noiembrie"
+msgstr ""
 
 msgid "December"
-msgstr "Decembrie"
+msgstr ""
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr "D"
+msgstr ""
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr "L"
+msgstr ""
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr "M"
+msgstr ""
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr "M"
+msgstr ""
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr "J"
+msgstr ""
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr "V"
+msgstr ""
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr "S"
+msgstr ""
 
 msgid "Show"
 msgstr "Arată"

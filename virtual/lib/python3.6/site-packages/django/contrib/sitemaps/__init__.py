@@ -1,12 +1,11 @@
-from urllib.parse import urlencode
-from urllib.request import urlopen
-
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.core import paginator
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import NoReverseMatch, reverse
 from django.utils import translation
+from django.utils.six.moves.urllib.parse import urlencode
+from django.utils.six.moves.urllib.request import urlopen
 
 PING_URL = "https://www.google.com/webmasters/tools/ping"
 
@@ -17,7 +16,7 @@ class SitemapNotFound(Exception):
 
 def ping_google(sitemap_url=None, ping_url=PING_URL):
     """
-    Alert Google that the sitemap for the current site has been updated.
+    Alerts Google that the sitemap for the current site has been updated.
     If sitemap_url is provided, it should be an absolute path to the sitemap
     for this site -- e.g., '/sitemap.xml'. If sitemap_url is not provided, this
     function will attempt to deduce it by using urls.reverse().
@@ -50,7 +49,7 @@ def _get_sitemap_full_url(sitemap_url):
     return 'http://%s%s' % (current_site.domain, sitemap_url)
 
 
-class Sitemap:
+class Sitemap(object):
     # This limit is defined by Google. See the index documentation at
     # http://www.sitemaps.org/protocol.html#index.
     limit = 50000
@@ -142,12 +141,11 @@ class GenericSitemap(Sitemap):
     priority = None
     changefreq = None
 
-    def __init__(self, info_dict, priority=None, changefreq=None, protocol=None):
+    def __init__(self, info_dict, priority=None, changefreq=None):
         self.queryset = info_dict['queryset']
         self.date_field = info_dict.get('date_field')
         self.priority = priority
         self.changefreq = changefreq
-        self.protocol = protocol
 
     def items(self):
         # Make sure to return a clone; we don't want premature evaluation.

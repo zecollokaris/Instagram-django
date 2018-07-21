@@ -1,6 +1,5 @@
-import functools
-
 from django.core.exceptions import ImproperlyConfigured
+from django.utils import lru_cache, six
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 
@@ -10,7 +9,7 @@ from .exceptions import TemplateDoesNotExist
 from .library import import_library
 
 
-class Engine:
+class Engine(object):
     default_builtins = [
         'django.template.defaulttags',
         'django.template.defaultfilters',
@@ -53,11 +52,12 @@ class Engine:
         self.template_builtins = self.get_template_builtins(self.builtins)
 
     @staticmethod
-    @functools.lru_cache()
+    @lru_cache.lru_cache()
     def get_default():
         """
-        Return the first DjangoTemplates backend that's configured, or raise
-        ImproperlyConfigured if none are configured.
+        When only one DjangoTemplates backend is configured, returns it.
+
+        Raises ImproperlyConfigured otherwise.
 
         This is required for preserving historical APIs that rely on a
         globally available, implicitly configured engine such as:
@@ -73,10 +73,18 @@ class Engine:
         # local imports are required to avoid import loops.
         from django.template import engines
         from django.template.backends.django import DjangoTemplates
-        for engine in engines.all():
-            if isinstance(engine, DjangoTemplates):
-                return engine.engine
-        raise ImproperlyConfigured('No DjangoTemplates backend is configured.')
+        django_engines = [engine for engine in engines.all()
+                          if isinstance(engine, DjangoTemplates)]
+        if len(django_engines) == 1:
+            # Unwrap the Engine instance inside DjangoTemplates
+            return django_engines[0].engine
+        elif len(django_engines) == 0:
+            raise ImproperlyConfigured(
+                "No DjangoTemplates backend is configured.")
+        else:
+            raise ImproperlyConfigured(
+                "Several DjangoTemplates backends are configured. "
+                "You must select one explicitly.")
 
     @cached_property
     def template_context_processors(self):
@@ -112,7 +120,7 @@ class Engine:
         else:
             args = []
 
-        if isinstance(loader, str):
+        if isinstance(loader, six.string_types):
             loader_class = import_string(loader)
             return loader_class(self, *args)
         else:
@@ -122,23 +130,33 @@ class Engine:
     def find_template(self, name, dirs=None, skip=None):
         tried = []
         for loader in self.template_loaders:
-            try:
-                template = loader.get_template(name, skip=skip)
-                return template, template.origin
-            except TemplateDoesNotExist as e:
-                tried.extend(e.tried)
+            if loader.supports_recursion:
+                try:
+                    template = loader.get_template(
+                        name, template_dirs=dirs, skip=skip,
+                    )
+                    return template, template.origin
+                except TemplateDoesNotExist as e:
+                    tried.extend(e.tried)
+            else:
+                # RemovedInDjango20Warning: Use old api for non-recursive
+                # loaders.
+                try:
+                    return loader(name, dirs)
+                except TemplateDoesNotExist:
+                    pass
         raise TemplateDoesNotExist(name, tried=tried)
 
     def from_string(self, template_code):
         """
-        Return a compiled Template object for the given template code,
+        Returns a compiled Template object for the given template code,
         handling template inheritance recursively.
         """
         return Template(template_code, engine=self)
 
     def get_template(self, template_name):
         """
-        Return a compiled Template object for the given template name,
+        Returns a compiled Template object for the given template name,
         handling template inheritance recursively.
         """
         template, origin = self.find_template(template_name)
@@ -165,7 +183,7 @@ class Engine:
 
     def select_template(self, template_name_list):
         """
-        Given a list of template names, return the first that can be loaded.
+        Given a list of template names, returns the first that can be loaded.
         """
         if not template_name_list:
             raise TemplateDoesNotExist("No template names provided")

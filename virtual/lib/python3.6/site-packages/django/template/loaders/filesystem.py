@@ -2,9 +2,14 @@
 Wrapper for loading templates from the filesystem.
 """
 
+import errno
+import io
+import warnings
+
 from django.core.exceptions import SuspiciousFileOperation
 from django.template import Origin, TemplateDoesNotExist
 from django.utils._os import safe_join
+from django.utils.deprecation import RemovedInDjango20Warning
 
 from .base import Loader as BaseLoader
 
@@ -12,7 +17,7 @@ from .base import Loader as BaseLoader
 class Loader(BaseLoader):
 
     def __init__(self, engine, dirs=None):
-        super().__init__(engine)
+        super(Loader, self).__init__(engine)
         self.dirs = dirs
 
     def get_dirs(self):
@@ -20,18 +25,22 @@ class Loader(BaseLoader):
 
     def get_contents(self, origin):
         try:
-            with open(origin.name, encoding=self.engine.file_charset) as fp:
+            with io.open(origin.name, encoding=self.engine.file_charset) as fp:
                 return fp.read()
-        except FileNotFoundError:
-            raise TemplateDoesNotExist(origin)
+        except IOError as e:
+            if e.errno == errno.ENOENT:
+                raise TemplateDoesNotExist(origin)
+            raise
 
-    def get_template_sources(self, template_name):
+    def get_template_sources(self, template_name, template_dirs=None):
         """
         Return an Origin object pointing to an absolute path in each directory
         in template_dirs. For security reasons, if a path doesn't lie inside
         one of the template_dirs it is excluded from the result set.
         """
-        for template_dir in self.get_dirs():
+        if not template_dirs:
+            template_dirs = self.get_dirs()
+        for template_dir in template_dirs:
             try:
                 name = safe_join(template_dir, template_name)
             except SuspiciousFileOperation:
@@ -44,3 +53,16 @@ class Loader(BaseLoader):
                 template_name=template_name,
                 loader=self,
             )
+
+    def load_template_source(self, template_name, template_dirs=None):
+        warnings.warn(
+            'The load_template_sources() method is deprecated. Use '
+            'get_template() or get_contents() instead.',
+            RemovedInDjango20Warning,
+        )
+        for origin in self.get_template_sources(template_name, template_dirs):
+            try:
+                return self.get_contents(origin), origin.name
+            except TemplateDoesNotExist:
+                pass
+        raise TemplateDoesNotExist(template_name)

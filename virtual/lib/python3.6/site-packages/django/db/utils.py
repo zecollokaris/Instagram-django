@@ -5,6 +5,8 @@ from threading import local
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.utils import six
+from django.utils._os import npath, upath
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 
@@ -12,7 +14,7 @@ DEFAULT_DB_ALIAS = 'default'
 DJANGO_VERSION_PICKLE_KEY = '_django_version'
 
 
-class Error(Exception):
+class Error(Exception if six.PY3 else StandardError):  # NOQA: StandardError undefined on PY3
     pass
 
 
@@ -48,9 +50,9 @@ class NotSupportedError(DatabaseError):
     pass
 
 
-class DatabaseErrorWrapper:
+class DatabaseErrorWrapper(object):
     """
-    Context manager and decorator that reraises backend-specific database
+    Context manager and decorator that re-throws backend-specific database
     exceptions using Django's common wrappers.
     """
 
@@ -82,11 +84,14 @@ class DatabaseErrorWrapper:
             db_exc_type = getattr(self.wrapper.Database, dj_exc_type.__name__)
             if issubclass(exc_type, db_exc_type):
                 dj_exc_value = dj_exc_type(*exc_value.args)
+                dj_exc_value.__cause__ = exc_value
+                if not hasattr(exc_value, '__traceback__'):
+                    exc_value.__traceback__ = traceback
                 # Only set the 'errors_occurred' flag for errors that may make
                 # the connection unusable.
                 if dj_exc_type not in (DataError, IntegrityError):
                     self.wrapper.errors_occurred = True
-                raise dj_exc_value.with_traceback(traceback) from exc_value
+                six.reraise(dj_exc_type, dj_exc_value, traceback)
 
     def __call__(self, func):
         # Note that we are intentionally not using @wraps here for performance
@@ -110,19 +115,23 @@ def load_backend(backend_name):
         return import_module('%s.base' % backend_name)
     except ImportError as e_user:
         # The database backend wasn't found. Display a helpful error message
-        # listing all built-in database backends.
-        backend_dir = os.path.join(os.path.dirname(__file__), 'backends')
-        builtin_backends = [
-            name for _, name, ispkg in pkgutil.iter_modules([backend_dir])
-            if ispkg and name not in {'base', 'dummy', 'postgresql_psycopg2'}
-        ]
-        if backend_name not in ['django.db.backends.%s' % b for b in builtin_backends]:
+        # listing all possible (built-in) database backends.
+        backend_dir = os.path.join(os.path.dirname(upath(__file__)), 'backends')
+        try:
+            builtin_backends = [
+                name for _, name, ispkg in pkgutil.iter_modules([npath(backend_dir)])
+                if ispkg and name not in {'base', 'dummy', 'postgresql_psycopg2'}
+            ]
+        except EnvironmentError:
+            builtin_backends = []
+        if backend_name not in ['django.db.backends.%s' % b for b in
+                                builtin_backends]:
             backend_reprs = map(repr, sorted(builtin_backends))
-            raise ImproperlyConfigured(
-                "%r isn't an available database backend.\n"
-                "Try using 'django.db.backends.XXX', where XXX is one of:\n"
-                "    %s" % (backend_name, ", ".join(backend_reprs))
-            ) from e_user
+            error_msg = ("%r isn't an available database backend.\n"
+                         "Try using 'django.db.backends.XXX', where XXX "
+                         "is one of:\n    %s\nError was: %s" %
+                         (backend_name, ", ".join(backend_reprs), e_user))
+            raise ImproperlyConfigured(error_msg)
         else:
             # If there's some other error, this must be an error in Django
             raise
@@ -132,7 +141,7 @@ class ConnectionDoesNotExist(Exception):
     pass
 
 
-class ConnectionHandler:
+class ConnectionHandler(object):
     def __init__(self, databases=None):
         """
         databases is an optional dictionary of database definitions (structured
@@ -160,7 +169,7 @@ class ConnectionHandler:
 
     def ensure_defaults(self, alias):
         """
-        Put the defaults into the settings dictionary for a given connection
+        Puts the defaults into the settings dictionary for a given connection
         where no settings is provided.
         """
         try:
@@ -181,7 +190,7 @@ class ConnectionHandler:
 
     def prepare_test_settings(self, alias):
         """
-        Make sure the test settings are available in the 'TEST' sub-dictionary.
+        Makes sure the test settings are available in the 'TEST' sub-dictionary.
         """
         try:
             conn = self.databases[alias]
@@ -225,10 +234,10 @@ class ConnectionHandler:
             connection.close()
 
 
-class ConnectionRouter:
+class ConnectionRouter(object):
     def __init__(self, routers=None):
         """
-        If routers is not specified, default to settings.DATABASE_ROUTERS.
+        If routers is not specified, will default to settings.DATABASE_ROUTERS.
         """
         self._routers = routers
 
@@ -238,7 +247,7 @@ class ConnectionRouter:
             self._routers = settings.DATABASE_ROUTERS
         routers = []
         for r in self._routers:
-            if isinstance(r, str):
+            if isinstance(r, six.string_types):
                 router = import_string(r)()
             else:
                 router = r
@@ -303,6 +312,8 @@ class ConnectionRouter:
         )
 
     def get_migratable_models(self, app_config, db, include_auto_created=False):
-        """Return app models allowed to be migrated on provided db."""
+        """
+        Return app models allowed to be synchronized on provided db.
+        """
         models = app_config.get_models(include_auto_created=include_auto_created)
         return [model for model in models if self.allow_migrate_model(db, model)]

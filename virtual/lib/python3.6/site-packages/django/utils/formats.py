@@ -4,8 +4,10 @@ import unicodedata
 from importlib import import_module
 
 from django.conf import settings
-from django.utils import dateformat, datetime_safe, numberformat
+from django.utils import dateformat, datetime_safe, numberformat, six
+from django.utils.encoding import force_str
 from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
 from django.utils.translation import (
     check_for_language, get_language, to_locale,
 )
@@ -58,7 +60,9 @@ def reset_format_cache():
 
 
 def iter_format_modules(lang, format_module_path=None):
-    """Find format modules."""
+    """
+    Does the heavy lifting of finding format modules.
+    """
     if not check_for_language(lang):
         return
 
@@ -67,7 +71,7 @@ def iter_format_modules(lang, format_module_path=None):
 
     format_locations = []
     if format_module_path:
-        if isinstance(format_module_path, str):
+        if isinstance(format_module_path, six.string_types):
             format_module_path = [format_module_path]
         for path in format_module_path:
             format_locations.append(path + '.%s')
@@ -85,7 +89,9 @@ def iter_format_modules(lang, format_module_path=None):
 
 
 def get_format_modules(lang=None, reverse=False):
-    """Return a list of the format modules found."""
+    """
+    Returns a list of the format modules found
+    """
     if lang is None:
         lang = get_language()
     if lang not in _format_modules_cache:
@@ -98,13 +104,14 @@ def get_format_modules(lang=None, reverse=False):
 
 def get_format(format_type, lang=None, use_l10n=None):
     """
-    For a specific format type, return the format for the current
-    language (locale). Default to the format in the settings.
-    format_type is the name of the format, e.g. 'DATE_FORMAT'.
+    For a specific format type, returns the format for the current
+    language (locale), defaults to the format in the settings.
+    format_type is the name of the format, e.g. 'DATE_FORMAT'
 
-    If use_l10n is provided and is not None, it forces the value to
+    If use_l10n is provided and is not None, that will force the value to
     be localized (or not), overriding the value of settings.USE_L10N.
     """
+    format_type = force_str(format_type)
     use_l10n = use_l10n or (use_l10n is None and settings.USE_L10N)
     if use_l10n and lang is None:
         lang = get_language()
@@ -120,14 +127,17 @@ def get_format(format_type, lang=None, use_l10n=None):
     val = None
     if use_l10n:
         for module in get_format_modules(lang):
-            val = getattr(module, format_type, None)
-            if val is not None:
-                break
+            try:
+                val = getattr(module, format_type)
+                if val is not None:
+                    break
+            except AttributeError:
+                pass
     if val is None:
         if format_type not in FORMAT_SETTINGS:
             return format_type
         val = getattr(settings, format_type)
-    elif format_type in ISO_INPUT_FORMATS:
+    elif format_type in ISO_INPUT_FORMATS.keys():
         # If a list of input formats from one of the format_modules was
         # retrieved, make sure the ISO_INPUT_FORMATS are in this list.
         val = list(val)
@@ -138,13 +148,13 @@ def get_format(format_type, lang=None, use_l10n=None):
     return val
 
 
-get_format_lazy = lazy(get_format, str, list, tuple)
+get_format_lazy = lazy(get_format, six.text_type, list, tuple)
 
 
 def date_format(value, format=None, use_l10n=None):
     """
-    Format a datetime.date or datetime.datetime object using a
-    localizable format.
+    Formats a datetime.date or datetime.datetime object using a
+    localizable format
 
     If use_l10n is provided and is not None, that will force the value to
     be localized (or not), overriding the value of settings.USE_L10N.
@@ -154,9 +164,9 @@ def date_format(value, format=None, use_l10n=None):
 
 def time_format(value, format=None, use_l10n=None):
     """
-    Format a datetime.time object using a localizable format.
+    Formats a datetime.time object using a localizable format
 
-    If use_l10n is provided and is not None, it forces the value to
+    If use_l10n is provided and is not None, that will force the value to
     be localized (or not), overriding the value of settings.USE_L10N.
     """
     return dateformat.time_format(value, get_format(format or 'TIME_FORMAT', use_l10n=use_l10n))
@@ -164,9 +174,9 @@ def time_format(value, format=None, use_l10n=None):
 
 def number_format(value, decimal_pos=None, use_l10n=None, force_grouping=False):
     """
-    Format a numeric value using localization settings.
+    Formats a numeric value using localization settings
 
-    If use_l10n is provided and is not None, it forces the value to
+    If use_l10n is provided and is not None, that will force the value to
     be localized (or not), overriding the value of settings.USE_L10N.
     """
     if use_l10n or (use_l10n is None and settings.USE_L10N):
@@ -185,17 +195,17 @@ def number_format(value, decimal_pos=None, use_l10n=None, force_grouping=False):
 
 def localize(value, use_l10n=None):
     """
-    Check if value is a localizable type (date, number...) and return it
+    Checks if value is a localizable type (date, number...) and returns it
     formatted as a string using current locale format.
 
-    If use_l10n is provided and is not None, it forces the value to
+    If use_l10n is provided and is not None, that will force the value to
     be localized (or not), overriding the value of settings.USE_L10N.
     """
-    if isinstance(value, str):  # Handle strings first for performance reasons.
+    if isinstance(value, six.string_types):  # Handle strings first for performance reasons.
         return value
     elif isinstance(value, bool):  # Make sure booleans don't get treated as numbers
-        return str(value)
-    elif isinstance(value, (decimal.Decimal, float, int)):
+        return mark_safe(six.text_type(value))
+    elif isinstance(value, (decimal.Decimal, float) + six.integer_types):
         return number_format(value, use_l10n=use_l10n)
     elif isinstance(value, datetime.datetime):
         return date_format(value, 'DATETIME_FORMAT', use_l10n=use_l10n)
@@ -208,35 +218,35 @@ def localize(value, use_l10n=None):
 
 def localize_input(value, default=None):
     """
-    Check if an input value is a localizable type and return it
+    Checks if an input value is a localizable type and returns it
     formatted with the appropriate formatting string of the current locale.
     """
-    if isinstance(value, str):  # Handle strings first for performance reasons.
+    if isinstance(value, six.string_types):  # Handle strings first for performance reasons.
         return value
     elif isinstance(value, bool):  # Don't treat booleans as numbers.
-        return str(value)
-    elif isinstance(value, (decimal.Decimal, float, int)):
+        return six.text_type(value)
+    elif isinstance(value, (decimal.Decimal, float) + six.integer_types):
         return number_format(value)
     elif isinstance(value, datetime.datetime):
         value = datetime_safe.new_datetime(value)
-        format = default or get_format('DATETIME_INPUT_FORMATS')[0]
+        format = force_str(default or get_format('DATETIME_INPUT_FORMATS')[0])
         return value.strftime(format)
     elif isinstance(value, datetime.date):
         value = datetime_safe.new_date(value)
-        format = default or get_format('DATE_INPUT_FORMATS')[0]
+        format = force_str(default or get_format('DATE_INPUT_FORMATS')[0])
         return value.strftime(format)
     elif isinstance(value, datetime.time):
-        format = default or get_format('TIME_INPUT_FORMATS')[0]
+        format = force_str(default or get_format('TIME_INPUT_FORMATS')[0])
         return value.strftime(format)
     return value
 
 
 def sanitize_separators(value):
     """
-    Sanitize a value according to the current decimal and
+    Sanitizes a value according to the current decimal and
     thousand separator setting. Used with form field input.
     """
-    if isinstance(value, str):
+    if settings.USE_L10N and isinstance(value, six.string_types):
         parts = []
         decimal_separator = get_format('DECIMAL_SEPARATOR')
         if decimal_separator in value:

@@ -1,7 +1,10 @@
 from django.contrib.gis import gdal
+from django.utils import six
+from django.utils.encoding import python_2_unicode_compatible
 
 
-class SpatialRefSysMixin:
+@python_2_unicode_compatible
+class SpatialRefSysMixin(object):
     """
     The SpatialRefSysMixin is a class used by the database-dependent
     SpatialRefSys objects to reduce redundant code.
@@ -9,7 +12,7 @@ class SpatialRefSysMixin:
     @property
     def srs(self):
         """
-        Return a GDAL SpatialReference object.
+        Returns a GDAL SpatialReference object.
         """
         # TODO: Is caching really necessary here?  Is complexity worth it?
         if hasattr(self, '_srs'):
@@ -36,24 +39,24 @@ class SpatialRefSysMixin:
     @property
     def ellipsoid(self):
         """
-        Return a tuple of the ellipsoid parameters:
+        Returns a tuple of the ellipsoid parameters:
         (semimajor axis, semiminor axis, and inverse flattening).
         """
         return self.srs.ellipsoid
 
     @property
     def name(self):
-        "Return the projection name."
+        "Returns the projection name."
         return self.srs.name
 
     @property
     def spheroid(self):
-        "Return the spheroid name for this spatial reference."
+        "Returns the spheroid name for this spatial reference."
         return self.srs['spheroid']
 
     @property
     def datum(self):
-        "Return the datum for this spatial reference."
+        "Returns the datum for this spatial reference."
         return self.srs['datum']
 
     @property
@@ -73,27 +76,27 @@ class SpatialRefSysMixin:
 
     @property
     def linear_name(self):
-        "Return the linear units name."
+        "Returns the linear units name."
         return self.srs.linear_name
 
     @property
     def linear_units(self):
-        "Return the linear units."
+        "Returns the linear units."
         return self.srs.linear_units
 
     @property
     def angular_name(self):
-        "Return the name of the angular units."
+        "Returns the name of the angular units."
         return self.srs.angular_name
 
     @property
     def angular_units(self):
-        "Return the angular units."
+        "Returns the angular units."
         return self.srs.angular_units
 
     @property
     def units(self):
-        "Return a tuple of the units and the name."
+        "Returns a tuple of the units and the name."
         if self.projected or self.local:
             return (self.linear_units, self.linear_name)
         elif self.geographic:
@@ -131,6 +134,6 @@ class SpatialRefSysMixin:
 
     def __str__(self):
         """
-        Return the string representation, a 'pretty' OGC WKT.
+        Returns the string representation, a 'pretty' OGC WKT.
         """
-        return str(self.srs)
+        return six.text_type(self.srs)

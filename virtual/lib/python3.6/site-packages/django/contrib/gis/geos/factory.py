@@ -1,4 +1,5 @@
 from django.contrib.gis.geos.geometry import GEOSGeometry, hex_regex, wkt_regex
+from django.utils import six
 
 
 def fromfile(file_h):
@@ -7,7 +8,7 @@ def fromfile(file_h):
     WKT, or HEX.
     """
     # If given a file name, get a real handle.
-    if isinstance(file_h, str):
+    if isinstance(file_h, six.string_types):
         with open(file_h, 'rb') as file_h:
             buf = file_h.read()
     else:
@@ -17,17 +18,16 @@ def fromfile(file_h):
     if isinstance(buf, bytes):
         try:
             decoded = buf.decode()
-        except UnicodeDecodeError:
-            pass
-        else:
             if wkt_regex.match(decoded) or hex_regex.match(decoded):
                 return GEOSGeometry(decoded)
+        except UnicodeDecodeError:
+            pass
     else:
         return GEOSGeometry(buf)
 
-    return GEOSGeometry(memoryview(buf))
+    return GEOSGeometry(six.memoryview(buf))
 
 
 def fromstr(string, **kwargs):
-    "Given a string value, return a GEOSGeometry object."
+    "Given a string value, returns a GEOSGeometry object."
     return GEOSGeometry(string, **kwargs)

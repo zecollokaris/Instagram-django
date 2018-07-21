@@ -1,8 +1,10 @@
 "Base Cache class."
+from __future__ import unicode_literals
+
 import time
 import warnings
 
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import DjangoRuntimeWarning, ImproperlyConfigured
 from django.utils.module_loading import import_string
 
 
@@ -10,7 +12,7 @@ class InvalidCacheBackendError(ImproperlyConfigured):
     pass
 
 
-class CacheKeyWarning(RuntimeWarning):
+class CacheKeyWarning(DjangoRuntimeWarning):
     pass
 
 
@@ -26,7 +28,7 @@ def default_key_func(key, key_prefix, version):
     """
     Default function to generate keys.
 
-    Construct the key used by all other methods. By default, prepend
+    Constructs the key used by all other methods. By default it prepends
     the `key_prefix'. KEY_FUNCTION can be used to specify an alternate
     function with custom key making behavior.
     """
@@ -37,7 +39,7 @@ def get_key_func(key_func):
     """
     Function to decide which key function to use.
 
-    Default to ``default_key_func``.
+    Defaults to ``default_key_func``.
     """
     if key_func is not None:
         if callable(key_func):
@@ -47,7 +49,7 @@ def get_key_func(key_func):
     return default_key_func
 
 
-class BaseCache:
+class BaseCache(object):
     def __init__(self, params):
         timeout = params.get('timeout', params.get('TIMEOUT', 300))
         if timeout is not None:
@@ -76,7 +78,7 @@ class BaseCache:
 
     def get_backend_timeout(self, timeout=DEFAULT_TIMEOUT):
         """
-        Return the timeout value usable by this backend based upon the provided
+        Returns the timeout value usable by this backend based upon the provided
         timeout.
         """
         if timeout == DEFAULT_TIMEOUT:
@@ -87,12 +89,12 @@ class BaseCache:
         return None if timeout is None else time.time() + timeout
 
     def make_key(self, key, version=None):
-        """
-        Construct the key used by all other methods. By default, use the
-        key_func to generate a key (which, by default, prepends the
-        `key_prefix' and 'version'). A different key function can be provided
-        at the time of cache construction; alternatively, you can subclass the
-        cache backend to provide custom key making behavior.
+        """Constructs the key used by all other methods. By default it
+        uses the key_func to generate a key (which, by default,
+        prepends the `key_prefix' and 'version'). A different key
+        function can be provided at the time of cache construction;
+        alternatively, you can subclass the cache backend to provide
+        custom key making behavior.
         """
         if version is None:
             version = self.version
@@ -103,10 +105,10 @@ class BaseCache:
     def add(self, key, value, timeout=DEFAULT_TIMEOUT, version=None):
         """
         Set a value in the cache if the key does not already exist. If
-        timeout is given, use that timeout for the key; otherwise use the
-        default cache timeout.
+        timeout is given, that timeout will be used for the key; otherwise
+        the default cache timeout will be used.
 
-        Return True if the value was stored, False otherwise.
+        Returns True if the value was stored, False otherwise.
         """
         raise NotImplementedError('subclasses of BaseCache must provide an add() method')
 
@@ -119,8 +121,8 @@ class BaseCache:
 
     def set(self, key, value, timeout=DEFAULT_TIMEOUT, version=None):
         """
-        Set a value in the cache. If timeout is given, use that timeout for the
-        key; otherwise use the default cache timeout.
+        Set a value in the cache. If timeout is given, that timeout will be
+        used for the key; otherwise the default cache timeout will be used.
         """
         raise NotImplementedError('subclasses of BaseCache must provide a set() method')
 
@@ -135,7 +137,7 @@ class BaseCache:
         Fetch a bunch of keys from the cache. For certain backends (memcached,
         pgsql) this can be *much* faster when fetching multiple values.
 
-        Return a dict mapping each key in keys to its value. If the given
+        Returns a dict mapping each key in keys to its value. If the given
         key is missing, it will be missing from the response dict.
         """
         d = {}
@@ -148,9 +150,9 @@ class BaseCache:
     def get_or_set(self, key, default, timeout=DEFAULT_TIMEOUT, version=None):
         """
         Fetch a given key from the cache. If the key does not exist,
-        add the key and set it to the default value. The default value can
-        also be any callable. If timeout is given, use that timeout for the
-        key; otherwise use the default cache timeout.
+        the key is added and set to the default value. The default value can
+        also be any callable. If timeout is given, that timeout will be used
+        for the key; otherwise the default cache timeout will be used.
 
         Return the value of the key stored or retrieved.
         """
@@ -168,7 +170,7 @@ class BaseCache:
 
     def has_key(self, key, version=None):
         """
-        Return True if the key is in the cache and has not expired.
+        Returns True if the key is in the cache and has not expired.
         """
         return self.get(key, version=version) is not None
 
@@ -193,7 +195,7 @@ class BaseCache:
 
     def __contains__(self, key):
         """
-        Return True if the key is in the cache and has not expired.
+        Returns True if the key is in the cache and has not expired.
         """
         # This is a separate method, rather than just a copy of has_key(),
         # so that it always has the same functionality as has_key(), even
@@ -206,15 +208,11 @@ class BaseCache:
         pairs.  For certain backends (memcached), this is much more efficient
         than calling set() multiple times.
 
-        If timeout is given, use that timeout for the key; otherwise use the
-        default cache timeout.
-
-        On backends that support it, return a list of keys that failed
-        insertion, or an empty list if all keys were inserted successfully.
+        If timeout is given, that timeout will be used for the key; otherwise
+        the default cache timeout will be used.
         """
         for key, value in data.items():
             self.set(key, value, timeout=timeout, version=version)
-        return []
 
     def delete_many(self, keys, version=None):
         """
@@ -249,9 +247,8 @@ class BaseCache:
                 break
 
     def incr_version(self, key, delta=1, version=None):
-        """
-        Add delta to the cache version for the supplied key. Return the new
-        version.
+        """Adds delta to the cache version for the supplied key. Returns the
+        new version.
         """
         if version is None:
             version = self.version
@@ -265,9 +262,8 @@ class BaseCache:
         return version + delta
 
     def decr_version(self, key, delta=1, version=None):
-        """
-        Subtract delta from the cache version for the supplied key. Return the
-        new version.
+        """Subtracts delta from the cache version for the supplied key. Returns
+        the new version.
         """
         return self.incr_version(key, -delta, version)
 

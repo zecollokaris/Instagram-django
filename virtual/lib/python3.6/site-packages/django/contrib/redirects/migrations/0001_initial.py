@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.db import migrations, models
 
 
@@ -30,7 +33,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('old_path',),
-                'unique_together': {('site', 'old_path')},
+                'unique_together': set([('site', 'old_path')]),
                 'db_table': 'django_redirect',
                 'verbose_name': 'redirect',
                 'verbose_name_plural': 'redirects',

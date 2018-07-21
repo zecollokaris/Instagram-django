@@ -1,13 +1,16 @@
+from django.utils import six
+
+
 def make_model_tuple(model):
     """
-    Take a model or a string of the form "app_label.ModelName" and return a
+    Takes a model or a string of the form "app_label.ModelName" and returns a
     corresponding ("app_label", "modelname") tuple. If a tuple is passed in,
-    assume it's a valid model tuple already and return it unchanged.
+    it's assumed to be a valid model tuple already and returned unchanged.
     """
     try:
         if isinstance(model, tuple):
             model_tuple = model
-        elif isinstance(model, str):
+        elif isinstance(model, six.string_types):
             app_label, model_name = model.split(".")
             model_tuple = app_label, model_name.lower()
         else:

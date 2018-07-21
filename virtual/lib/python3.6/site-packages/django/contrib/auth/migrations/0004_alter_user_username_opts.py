@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib.auth import validators
 from django.db import migrations, models
+from django.utils import six
 
 
 class Migration(migrations.Migration):
@@ -15,7 +19,7 @@ class Migration(migrations.Migration):
             name='username',
             field=models.CharField(
                 error_messages={'unique': 'A user with that username already exists.'}, max_length=30,
-                validators=[validators.UnicodeUsernameValidator()],
+                validators=[validators.UnicodeUsernameValidator() if six.PY3 else validators.ASCIIUsernameValidator()],
                 help_text='Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.',
                 unique=True, verbose_name='username'
             ),

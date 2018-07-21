@@ -4,7 +4,7 @@ import re
 COMPILED_REGEX_TYPE = type(re.compile(''))
 
 
-class RegexObject:
+class RegexObject(object):
     def __init__(self, obj):
         self.pattern = obj.pattern
         self.flags = obj.flags

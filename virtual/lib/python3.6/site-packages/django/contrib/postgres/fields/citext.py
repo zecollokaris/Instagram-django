@@ -3,10 +3,10 @@ from django.db.models import CharField, EmailField, TextField
 __all__ = ['CICharField', 'CIEmailField', 'CIText', 'CITextField']
 
 
-class CIText:
+class CIText(object):
 
     def get_internal_type(self):
-        return 'CI' + super().get_internal_type()
+        return 'CI' + super(CIText, self).get_internal_type()
 
     def db_type(self, connection):
         return 'citext'

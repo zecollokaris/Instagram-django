@@ -20,6 +20,7 @@ from django.contrib.gis.gdal.field import (
 )
 from django.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist
 from django.db import connections, models, router, transaction
+from django.utils import six
 from django.utils.encoding import force_text
 
 
@@ -44,7 +45,7 @@ class MissingForeignKey(LayerMapError):
     pass
 
 
-class LayerMapping:
+class LayerMapping(object):
     "A class that maps OGR Layers to GeoDjango Models."
 
     # Acceptable 'base' types for a multi-geometry type.
@@ -88,7 +89,7 @@ class LayerMapping:
         argument usage.
         """
         # Getting the DataSource and the associated Layer.
-        if isinstance(data, str):
+        if isinstance(data, six.string_types):
             self.ds = DataSource(data, encoding=encoding)
         else:
             self.ds = data
@@ -150,7 +151,7 @@ class LayerMapping:
 
     # #### Checking routines used during initialization ####
     def check_fid_range(self, fid_range):
-        "Check the `fid_range` keyword."
+        "This checks the `fid_range` keyword."
         if fid_range:
             if isinstance(fid_range, (tuple, list)):
                 return slice(*fid_range)
@@ -163,9 +164,9 @@ class LayerMapping:
 
     def check_layer(self):
         """
-        Check the Layer metadata and ensure that it's compatible with the
-        mapping information and model. Unlike previous revisions, there is no
-        need to increment through each feature in the Layer.
+        This checks the Layer metadata, and ensures that it is compatible
+        with the mapping information and model.  Unlike previous revisions,
+        there is no need to increment through each feature in the Layer.
         """
         # The geometry field of the model is set here.
         # TODO: Support more than one geometry field / model.  However, this
@@ -259,13 +260,13 @@ class LayerMapping:
             self.fields[field_name] = fields_val
 
     def check_srs(self, source_srs):
-        "Check the compatibility of the given spatial reference object."
+        "Checks the compatibility of the given spatial reference object."
 
         if isinstance(source_srs, SpatialReference):
             sr = source_srs
         elif isinstance(source_srs, self.spatial_backend.spatial_ref_sys()):
             sr = source_srs.srs
-        elif isinstance(source_srs, (int, str)):
+        elif isinstance(source_srs, (int, six.string_types)):
             sr = SpatialReference(source_srs)
         else:
             # Otherwise just pulling the SpatialReference from the layer
@@ -277,13 +278,13 @@ class LayerMapping:
             return sr
 
     def check_unique(self, unique):
-        "Check the `unique` keyword parameter -- may be a sequence or string."
+        "Checks the `unique` keyword parameter -- may be a sequence or string."
         if isinstance(unique, (list, tuple)):
             # List of fields to determine uniqueness with
             for attr in unique:
                 if attr not in self.mapping:
                     raise ValueError
-        elif isinstance(unique, str):
+        elif isinstance(unique, six.string_types):
             # Only a single field passed in.
             if unique not in self.mapping:
                 raise ValueError
@@ -293,8 +294,8 @@ class LayerMapping:
     # Keyword argument retrieval routines ####
     def feature_kwargs(self, feat):
         """
-        Given an OGR Feature, return a dictionary of keyword arguments for
-        constructing the mapped model.
+        Given an OGR Feature, this will return a dictionary of keyword arguments
+        for constructing the mapped model.
         """
         # The keyword arguments for model construction.
         kwargs = {}
@@ -326,11 +327,11 @@ class LayerMapping:
 
     def unique_kwargs(self, kwargs):
         """
-        Given the feature keyword arguments (from `feature_kwargs`), construct
-        and return the uniqueness keyword arguments -- a subset of the feature
-        kwargs.
+        Given the feature keyword arguments (from `feature_kwargs`) this routine
+        will construct and return the uniqueness keyword arguments -- a subset
+        of the feature kwargs.
         """
-        if isinstance(self.unique, str):
+        if isinstance(self.unique, six.string_types):
             return {self.unique: kwargs[self.unique]}
         else:
             return {fld: kwargs[fld] for fld in self.unique}
@@ -338,8 +339,9 @@ class LayerMapping:
     # #### Verification routines used in constructing model keyword arguments. ####
     def verify_ogr_field(self, ogr_field, model_field):
         """
-        Verify if the OGR Field contents are acceptable to the model field. If
-        they are, return the verified value, otherwise raise an exception.
+        Verifies if the OGR Field contents are acceptable to the Django
+        model field.  If they are, the verified value is returned,
+        otherwise the proper exception is raised.
         """
         if (isinstance(ogr_field, OFTString) and
                 isinstance(model_field, (models.CharField, models.TextField))):
@@ -396,7 +398,8 @@ class LayerMapping:
     def verify_fk(self, feat, rel_model, rel_mapping):
         """
         Given an OGR Feature, the related model and its dictionary mapping,
-        retrieve the related model for the ForeignKey mapping.
+        this routine will retrieve the related model for the ForeignKey
+        mapping.
         """
         # TODO: It is expensive to retrieve a model for every record --
         #  explore if an efficient mechanism exists for caching related
@@ -418,7 +421,7 @@ class LayerMapping:
 
     def verify_geom(self, geom, model_field):
         """
-        Verify the geometry -- construct and return a GeometryCollection
+        Verifies the geometry -- will construct and return a GeometryCollection
         if necessary (for example if the model field is MultiPolygonField while
         the mapped shapefile only contains Polygons).
         """
@@ -445,7 +448,7 @@ class LayerMapping:
 
     # #### Other model methods ####
     def coord_transform(self):
-        "Return the coordinate transformation object."
+        "Returns the coordinate transformation object."
         SpatialRefSys = self.spatial_backend.spatial_ref_sys()
         try:
             # Getting the target spatial reference system
@@ -453,13 +456,12 @@ class LayerMapping:
 
             # Creating the CoordTransform object
             return CoordTransform(self.source_srs, target_srs)
-        except Exception as exc:
-            raise LayerMapError(
-                'Could not translate between the data source and model geometry.'
-            ) from exc
+        except Exception as msg:
+            new_msg = 'Could not translate between the data source and model geometry: %s' % msg
+            six.reraise(LayerMapError, LayerMapError(new_msg), sys.exc_info()[2])
 
     def geometry_field(self):
-        "Return the GeometryField instance associated with the geographic column."
+        "Returns the GeometryField instance associated with the geographic column."
         # Use `get_field()` on the model's options so that we
         # get the correct field instance if there's model inheritance.
         opts = self.model._meta
@@ -476,7 +478,7 @@ class LayerMapping:
     def save(self, verbose=False, fid_range=False, step=False,
              progress=False, silent=False, stream=sys.stdout, strict=False):
         """
-        Save the contents from the OGR DataSource Layer into the database
+        Saves the contents from the OGR DataSource Layer into the database
         according to the mapping dictionary given at initialization.
 
         Keyword Parameters:

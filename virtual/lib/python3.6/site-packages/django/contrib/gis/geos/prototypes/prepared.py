@@ -1,4 +1,4 @@
-from ctypes import c_byte
+from ctypes import c_char
 
 from django.contrib.gis.geos.libgeos import (
     GEOM_PTR, PREPGEOM_PTR, GEOSFuncFactory,
@@ -13,7 +13,7 @@ prepared_destroy = GEOSFuncFactory('GEOSPreparedGeom_destroy', argtypes=[PREPGEO
 # Prepared geometry binary predicate support.
 class PreparedPredicate(GEOSFuncFactory):
     argtypes = [PREPGEOM_PTR, GEOM_PTR]
-    restype = c_byte
+    restype = c_char
     errcheck = staticmethod(check_predicate)
 
 

@@ -2,6 +2,8 @@
 Utility functions for generating "lorem ipsum" Latin text.
 """
 
+from __future__ import unicode_literals
+
 import random
 
 COMMON_P = (
@@ -55,7 +57,7 @@ COMMON_WORDS = (
 
 def sentence():
     """
-    Return a randomly generated sentence of lorem ipsum text.
+    Returns a randomly generated sentence of lorem ipsum text.
 
     The first word is capitalized, and the sentence ends in either a period or
     question mark. Commas are added at random.
@@ -70,7 +72,7 @@ def sentence():
 
 def paragraph():
     """
-    Return a randomly generated paragraph of lorem ipsum text.
+    Returns a randomly generated paragraph of lorem ipsum text.
 
     The paragraph consists of between 1 and 4 sentences, inclusive.
     """
@@ -79,7 +81,7 @@ def paragraph():
 
 def paragraphs(count, common=True):
     """
-    Return a list of paragraphs as returned by paragraph().
+    Returns a list of paragraphs as returned by paragraph().
 
     If `common` is True, then the first paragraph will be the standard
     'lorem ipsum' paragraph. Otherwise, the first paragraph will be random
@@ -96,7 +98,7 @@ def paragraphs(count, common=True):
 
 def words(count, common=True):
     """
-    Return a string of `count` lorem ipsum words separated by a single space.
+    Returns a string of `count` lorem ipsum words separated by a single space.
 
     If `common` is True, then the first 19 words will be the standard
     'lorem ipsum' words. Otherwise, all words will be selected randomly.

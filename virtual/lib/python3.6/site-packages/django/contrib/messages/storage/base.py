@@ -1,12 +1,16 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib.messages import constants, utils
+from django.utils.encoding import force_text, python_2_unicode_compatible
 
 LEVEL_TAGS = utils.get_level_tags()
 
 
-class Message:
+@python_2_unicode_compatible
+class Message(object):
     """
-    Represent an actual message that can be stored in any of the supported
+    Represents an actual message that can be stored in any of the supported
     storage classes (typically session- or cookie-based) and rendered in a view
     or template.
     """
@@ -18,29 +22,39 @@ class Message:
 
     def _prepare(self):
         """
-        Prepare the message for serialization by forcing the ``message``
-        and ``extra_tags`` to str in case they are lazy translations.
+        Prepares the message for serialization by forcing the ``message``
+        and ``extra_tags`` to unicode in case they are lazy translations.
+
+        Known "safe" types (None, int, etc.) are not converted (see Django's
+        ``force_text`` implementation for details).
         """
-        self.message = str(self.message)
-        self.extra_tags = str(self.extra_tags) if self.extra_tags is not None else None
+        self.message = force_text(self.message, strings_only=True)
+        self.extra_tags = force_text(self.extra_tags, strings_only=True)
 
     def __eq__(self, other):
         return isinstance(other, Message) and self.level == other.level and \
             self.message == other.message
 
     def __str__(self):
-        return str(self.message)
+        return force_text(self.message)
 
     @property
     def tags(self):
-        return ' '.join(tag for tag in [self.extra_tags, self.level_tag] if tag)
+        extra_tags = force_text(self.extra_tags, strings_only=True)
+        if extra_tags and self.level_tag:
+            return ' '.join([extra_tags, self.level_tag])
+        elif extra_tags:
+            return extra_tags
+        elif self.level_tag:
+            return self.level_tag
+        return ''
 
     @property
     def level_tag(self):
-        return LEVEL_TAGS.get(self.level, '')
+        return force_text(LEVEL_TAGS.get(self.level, ''), strings_only=True)
 
 
-class BaseStorage:
+class BaseStorage(object):
     """
     This is the base backend for temporary message storage.
 
@@ -53,7 +67,7 @@ class BaseStorage:
         self._queued_messages = []
         self.used = False
         self.added_new = False
-        super().__init__(*args, **kwargs)
+        super(BaseStorage, self).__init__(*args, **kwargs)
 
     def __len__(self):
         return len(self._loaded_messages) + len(self._queued_messages)
@@ -71,7 +85,7 @@ class BaseStorage:
     @property
     def _loaded_messages(self):
         """
-        Return a list of loaded messages, retrieving them first if they have
+        Returns a list of loaded messages, retrieving them first if they have
         not been loaded yet.
         """
         if not hasattr(self, '_loaded_data'):
@@ -81,7 +95,7 @@ class BaseStorage:
 
     def _get(self, *args, **kwargs):
         """
-        Retrieve a list of stored messages. Return a tuple of the messages
+        Retrieves a list of stored messages. Returns a tuple of the messages
         and a flag indicating whether or not all the messages originally
         intended to be stored in this storage were, in fact, stored and
         retrieved; e.g., ``(messages, all_retrieved)``.
@@ -96,7 +110,7 @@ class BaseStorage:
 
     def _store(self, messages, response, *args, **kwargs):
         """
-        Store a list of messages and return a list of any messages which could
+        Stores a list of messages, returning a list of any messages which could
         not be stored.
 
         One type of object must be able to be stored, ``Message``.
@@ -107,17 +121,18 @@ class BaseStorage:
 
     def _prepare_messages(self, messages):
         """
-        Prepare a list of messages for storage.
+        Prepares a list of messages for storage.
         """
         for message in messages:
             message._prepare()
 
     def update(self, response):
         """
-        Store all unread messages.
+        Stores all unread messages.
 
-        If the backend has yet to be iterated, store previously stored messages
-        again. Otherwise, only store messages added after the last iteration.
+        If the backend has yet to be iterated, previously stored messages will
+        be stored again. Otherwise, only messages added after the last
+        iteration will be stored.
         """
         self._prepare_messages(self._queued_messages)
         if self.used:
@@ -128,7 +143,7 @@ class BaseStorage:
 
     def add(self, level, message, extra_tags=''):
         """
-        Queue a message to be stored.
+        Queues a message to be stored.
 
         The message is only queued if it contained something and its level is
         not less than the recording level (``self.level``).
@@ -146,7 +161,7 @@ class BaseStorage:
 
     def _get_level(self):
         """
-        Return the minimum recorded level.
+        Returns the minimum recorded level.
 
         The default level is the ``MESSAGE_LEVEL`` setting. If this is
         not found, the ``INFO`` level is used.
@@ -157,7 +172,7 @@ class BaseStorage:
 
     def _set_level(self, value=None):
         """
-        Set a custom minimum recorded level.
+        Sets a custom minimum recorded level.
 
         If set to ``None``, the default level will be used (see the
         ``_get_level`` method).

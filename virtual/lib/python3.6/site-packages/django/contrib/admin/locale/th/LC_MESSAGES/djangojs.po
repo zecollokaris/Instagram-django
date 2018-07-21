@@ -3,15 +3,14 @@
 # Translators:
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Kowit Charoenratchatabhan <kowit.s.c@gmail.com>, 2011-2012
-# Perry Roper <perry@getwashdrop.com>, 2017
 # Suteepat Damrongyingsupab <tianissimo@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-17 23:12+0200\n"
-"PO-Revision-Date: 2017-09-18 05:04+0000\n"
-"Last-Translator: Perry Roper <perry@getwashdrop.com>\n"
+"PO-Revision-Date: 2016-05-21 10:11+0000\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Thai (http://www.transifex.com/django/django/language/th/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -125,7 +124,7 @@ msgid "Noon"
 msgstr "เที่ยงวัน"
 
 msgid "6 p.m."
-msgstr "หกโมงเย็น"
+msgstr ""
 
 msgid "Cancel"
 msgstr "ยกเลิก"
@@ -143,68 +142,68 @@ msgid "Tomorrow"
 msgstr "พรุ่งนี้"
 
 msgid "January"
-msgstr "มกราคม"
+msgstr ""
 
 msgid "February"
-msgstr "กุมภาพันธ์"
+msgstr ""
 
 msgid "March"
-msgstr "มีนาคม"
+msgstr ""
 
 msgid "April"
-msgstr "เมษายน"
+msgstr ""
 
 msgid "May"
-msgstr "พฤษภาคม"
+msgstr ""
 
 msgid "June"
-msgstr "มิถุนายน"
+msgstr ""
 
 msgid "July"
-msgstr "กรกฎาคม"
+msgstr ""
 
 msgid "August"
-msgstr "สิงหาคม"
+msgstr ""
 
 msgid "September"
-msgstr "กันยายน"
+msgstr ""
 
 msgid "October"
-msgstr "ตุลาคม"
+msgstr ""
 
 msgid "November"
-msgstr "พฤศจิกายน"
+msgstr ""
 
 msgid "December"
-msgstr "ธันวาคม"
+msgstr ""
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr "อา."
+msgstr ""
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr "จ."
+msgstr ""
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr "อ."
+msgstr ""
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr "พ."
+msgstr ""
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr "พฤ."
+msgstr ""
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr "ศ."
+msgstr ""
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr "ส."
+msgstr ""
 
 msgid "Show"
 msgstr "แสดง"

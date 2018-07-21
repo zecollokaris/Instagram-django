@@ -3,13 +3,15 @@ from importlib import import_module
 from django.utils.version import get_docs_version
 
 
-def deconstructible(*args, path=None):
+def deconstructible(*args, **kwargs):
     """
-    Class decorator that allows the decorated class to be serialized
+    Class decorator that allow the decorated class to be serialized
     by the migrations subsystem.
 
-    The `path` kwarg specifies the import path.
+    Accepts an optional kwarg `path` to specify the import path.
     """
+    path = kwargs.pop('path', None)
+
     def decorator(klass):
         def __new__(cls, *args, **kwargs):
             # We capture the arguments to make returning them trivial
@@ -19,10 +21,10 @@ def deconstructible(*args, path=None):
 
         def deconstruct(obj):
             """
-            Return a 3-tuple of class import path, positional arguments,
+            Returns a 3-tuple of class import path, positional arguments,
             and keyword arguments.
             """
-            # Fallback version
+            # Python 2/fallback version
             if path:
                 module_name, _, name = path.rpartition('.')
             else:
@@ -52,4 +54,4 @@ def deconstructible(*args, path=None):
 
     if not args:
         return decorator
-    return decorator(*args)
+    return decorator(*args, **kwargs)

@@ -3,8 +3,10 @@
 """
 from django.contrib.gis.db.backends.base.models import SpatialRefSysMixin
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class SpatialiteGeometryColumns(models.Model):
     """
     The 'geometry_columns' table from SpatiaLite.
@@ -24,7 +26,7 @@ class SpatialiteGeometryColumns(models.Model):
     @classmethod
     def table_name_col(cls):
         """
-        Return the name of the metadata column used to store the feature table
+        Returns the name of the metadata column used to store the feature table
         name.
         """
         return 'f_table_name'
@@ -32,7 +34,7 @@ class SpatialiteGeometryColumns(models.Model):
     @classmethod
     def geom_col_name(cls):
         """
-        Return the name of the metadata column used to store the feature
+        Returns the name of the metadata column used to store the feature
         geometry column.
         """
         return 'f_geometry_column'

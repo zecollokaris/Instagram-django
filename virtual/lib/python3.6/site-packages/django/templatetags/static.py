@@ -1,9 +1,8 @@
-from urllib.parse import quote, urljoin
-
 from django import template
 from django.apps import apps
 from django.utils.encoding import iri_to_uri
 from django.utils.html import conditional_escape
+from django.utils.six.moves.urllib.parse import quote, urljoin
 
 register = template.Library()
 
@@ -57,7 +56,7 @@ class PrefixNode(template.Node):
 @register.tag
 def get_static_prefix(parser, token):
     """
-    Populate a template variable with the static prefix,
+    Populates a template variable with the static prefix,
     ``settings.STATIC_URL``.
 
     Usage::
@@ -75,7 +74,7 @@ def get_static_prefix(parser, token):
 @register.tag
 def get_media_prefix(parser, token):
     """
-    Populate a template variable with the media prefix,
+    Populates a template variable with the media prefix,
     ``settings.MEDIA_URL``.
 
     Usage::
@@ -143,7 +142,7 @@ class StaticNode(template.Node):
 @register.tag('static')
 def do_static(parser, token):
     """
-    Join the given path with the STATIC_URL setting.
+    Joins the given path with the STATIC_URL setting.
 
     Usage::
 

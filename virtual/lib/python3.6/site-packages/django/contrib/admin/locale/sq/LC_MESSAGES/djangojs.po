@@ -1,15 +1,15 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
-# Besnik <besnik@programeshqip.org>, 2011-2012,2015
-# Besnik <besnik@programeshqip.org>, 2015,2017
+# Besnik <besnik@programeshqip.org>, 2011-2012
+# Besnik <besnik@programeshqip.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-17 23:12+0200\n"
-"PO-Revision-Date: 2017-11-29 22:17+0000\n"
-"Last-Translator: Besnik <besnik@programeshqip.org>\n"
+"PO-Revision-Date: 2016-05-21 10:11+0000\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Albanian (http://www.transifex.com/django/django/language/"
 "sq/)\n"
 "MIME-Version: 1.0\n"
@@ -150,68 +150,68 @@ msgid "Tomorrow"
 msgstr "Nesër"
 
 msgid "January"
-msgstr "Janar"
+msgstr ""
 
 msgid "February"
-msgstr "Shkurt"
+msgstr ""
 
 msgid "March"
-msgstr "Mars"
+msgstr ""
 
 msgid "April"
-msgstr "Prill"
+msgstr ""
 
 msgid "May"
-msgstr "Maj"
+msgstr ""
 
 msgid "June"
-msgstr "Qershor"
+msgstr ""
 
 msgid "July"
-msgstr "Korrik"
+msgstr ""
 
 msgid "August"
-msgstr "Gusht"
+msgstr ""
 
 msgid "September"
-msgstr "Shtator"
+msgstr ""
 
 msgid "October"
-msgstr "Tetor"
+msgstr ""
 
 msgid "November"
-msgstr "Nëntor"
+msgstr ""
 
 msgid "December"
-msgstr "Dhjetor"
+msgstr ""
 
 msgctxt "one letter Sunday"
 msgid "S"
-msgstr "D"
+msgstr ""
 
 msgctxt "one letter Monday"
 msgid "M"
-msgstr "H"
+msgstr ""
 
 msgctxt "one letter Tuesday"
 msgid "T"
-msgstr "M"
+msgstr ""
 
 msgctxt "one letter Wednesday"
 msgid "W"
-msgstr "M"
+msgstr ""
 
 msgctxt "one letter Thursday"
 msgid "T"
-msgstr "E"
+msgstr ""
 
 msgctxt "one letter Friday"
 msgid "F"
-msgstr "P"
+msgstr ""
 
 msgctxt "one letter Saturday"
 msgid "S"
-msgstr "S"
+msgstr ""
 
 msgid "Show"
 msgstr "Shfaqe"

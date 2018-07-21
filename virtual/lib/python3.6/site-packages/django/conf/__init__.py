@@ -1,19 +1,17 @@
 """
 Settings and configuration for Django.
 
-Read values from the module specified by the DJANGO_SETTINGS_MODULE environment
-variable, and then from django.conf.global_settings; see the global_settings.py
-for a list of all possible variables.
+Values will be read from the module specified by the DJANGO_SETTINGS_MODULE environment
+variable, and then from django.conf.global_settings; see the global settings file for
+a list of all possible variables.
 """
 
 import importlib
 import os
 import time
-import warnings
 
 from django.conf import global_settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.deprecation import RemovedInDjango30Warning
 from django.utils.functional import LazyObject, empty
 
 ENVIRONMENT_VARIABLE = "DJANGO_SETTINGS_MODULE"
@@ -28,8 +26,8 @@ class LazySettings(LazyObject):
     def _setup(self, name=None):
         """
         Load the settings module pointed to by the environment variable. This
-        is used the first time settings are needed, if the user hasn't
-        configured settings manually.
+        is used the first time we need any settings at all, if the user has not
+        previously configured the settings manually.
         """
         settings_module = os.environ.get(ENVIRONMENT_VARIABLE)
         if not settings_module:
@@ -51,7 +49,9 @@ class LazySettings(LazyObject):
         }
 
     def __getattr__(self, name):
-        """Return the value of a setting and cache it in self.__dict__."""
+        """
+        Return the value of a setting and cache it in self.__dict__.
+        """
         if self._wrapped is empty:
             self._setup(name)
         val = getattr(self._wrapped, name)
@@ -67,11 +67,13 @@ class LazySettings(LazyObject):
             self.__dict__.clear()
         else:
             self.__dict__.pop(name, None)
-        super().__setattr__(name, value)
+        super(LazySettings, self).__setattr__(name, value)
 
     def __delattr__(self, name):
-        """Delete a setting and clear it from cache if needed."""
-        super().__delattr__(name)
+        """
+        Delete a setting and clear it from cache if needed.
+        """
+        super(LazySettings, self).__delattr__(name)
         self.__dict__.pop(name, None)
 
     def configure(self, default_settings=global_settings, **options):
@@ -89,11 +91,13 @@ class LazySettings(LazyObject):
 
     @property
     def configured(self):
-        """Return True if the settings have already been configured."""
+        """
+        Returns True if the settings have already been configured.
+        """
         return self._wrapped is not empty
 
 
-class Settings:
+class Settings(object):
     def __init__(self, settings_module):
         # update this dict from global settings (but only for ALL_CAPS settings)
         for setting in dir(global_settings):
@@ -124,9 +128,6 @@ class Settings:
         if not self.SECRET_KEY:
             raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
 
-        if self.is_overridden('DEFAULT_CONTENT_TYPE'):
-            warnings.warn('The DEFAULT_CONTENT_TYPE setting is deprecated.', RemovedInDjango30Warning)
-
         if hasattr(time, 'tzset') and self.TIME_ZONE:
             # When we can, attempt to validate the timezone. If we can't find
             # this file, no check happens and it's harmless.
@@ -149,8 +150,10 @@ class Settings:
         }
 
 
-class UserSettingsHolder:
-    """Holder for user configured settings."""
+class UserSettingsHolder(object):
+    """
+    Holder for user configured settings.
+    """
     # SETTINGS_MODULE doesn't make much sense in the manually configured
     # (standalone) case.
     SETTINGS_MODULE = None
@@ -170,14 +173,12 @@ class UserSettingsHolder:
 
     def __setattr__(self, name, value):
         self._deleted.discard(name)
-        if name == 'DEFAULT_CONTENT_TYPE':
-            warnings.warn('The DEFAULT_CONTENT_TYPE setting is deprecated.', RemovedInDjango30Warning)
-        super().__setattr__(name, value)
+        super(UserSettingsHolder, self).__setattr__(name, value)
 
     def __delattr__(self, name):
         self._deleted.add(name)
         if hasattr(self, name):
-            super().__delattr__(name)
+            super(UserSettingsHolder, self).__delattr__(name)
 
     def __dir__(self):
         return sorted(
@@ -189,7 +190,7 @@ class UserSettingsHolder:
         deleted = (setting in self._deleted)
         set_locally = (setting in self.__dict__)
         set_on_default = getattr(self.default_settings, 'is_overridden', lambda s: False)(setting)
-        return deleted or set_locally or set_on_default
+        return (deleted or set_locally or set_on_default)
 
     def __repr__(self):
         return '<%(cls)s>' % {

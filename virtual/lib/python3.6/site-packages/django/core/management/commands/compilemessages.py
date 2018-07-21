@@ -1,9 +1,12 @@
+from __future__ import unicode_literals
+
 import codecs
 import glob
 import os
 
 from django.core.management.base import BaseCommand, CommandError
 from django.core.management.utils import find_command, popen_wrapper
+from django.utils._os import npath, upath
 
 
 def has_bom(fn):
@@ -43,7 +46,7 @@ class Command(BaseCommand):
             help='Locales to exclude. Default is none. Can be used multiple times.',
         )
         parser.add_argument(
-            '--use-fuzzy', '-f', dest='fuzzy', action='store_true',
+            '--use-fuzzy', '-f', dest='fuzzy', action='store_true', default=False,
             help='Use fuzzy translations.',
         )
 
@@ -61,7 +64,7 @@ class Command(BaseCommand):
         basedirs = [os.path.join('conf', 'locale'), 'locale']
         if os.environ.get('DJANGO_SETTINGS_MODULE'):
             from django.conf import settings
-            basedirs.extend(settings.LOCALE_PATHS)
+            basedirs.extend(upath(path) for path in settings.LOCALE_PATHS)
 
         # Walk entire tree, looking for locale directories
         for dirpath, dirnames, filenames in os.walk('.', topdown=True):
@@ -85,7 +88,7 @@ class Command(BaseCommand):
 
         # Account for excluded locales
         locales = locale or all_locales
-        locales = set(locales).difference(exclude)
+        locales = set(locales) - set(exclude)
 
         for basedir in basedirs:
             if locales:
@@ -114,13 +117,13 @@ class Command(BaseCommand):
             base_path = os.path.splitext(po_path)[0]
 
             # Check writability on first location
-            if i == 0 and not is_writable(base_path + '.mo'):
+            if i == 0 and not is_writable(npath(base_path + '.mo')):
                 self.stderr.write("The po files under %s are in a seemingly not writable location. "
                                   "mo files will not be updated/created." % dirpath)
                 return
 
             args = [self.program] + self.program_options + [
-                '-o', base_path + '.mo', base_path + '.po'
+                '-o', npath(base_path + '.mo'), npath(base_path + '.po')
             ]
             output, errors, status = popen_wrapper(args)
             if status:

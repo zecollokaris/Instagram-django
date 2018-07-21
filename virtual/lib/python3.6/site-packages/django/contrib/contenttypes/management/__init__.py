@@ -1,6 +1,7 @@
 from django.apps import apps as global_apps
 from django.db import DEFAULT_DB_ALIAS, migrations, router, transaction
 from django.db.utils import IntegrityError
+from django.utils import six
 
 
 class RenameContentType(migrations.RunPython):
@@ -8,7 +9,7 @@ class RenameContentType(migrations.RunPython):
         self.app_label = app_label
         self.old_model = old_model
         self.new_model = new_model
-        super().__init__(self.rename_forward, self.rename_backward)
+        super(RenameContentType, self).__init__(self.rename_forward, self.rename_backward)
 
     def _rename(self, apps, schema_editor, old_model, new_model):
         ContentType = apps.get_model('contenttypes', 'ContentType')
@@ -61,7 +62,7 @@ def inject_rename_contenttypes_operations(plan=None, apps=global_apps, using=DEF
         available = True
 
     for migration, backward in plan:
-        if (migration.app_label, migration.name) == ('contenttypes', '0001_initial'):
+        if ((migration.app_label, migration.name) == ('contenttypes', '0001_initial')):
             # There's no point in going forward if the initial contenttypes
             # migration is unapplied as the ContentType model will be
             # unavailable from this point.
@@ -103,7 +104,7 @@ def get_contenttypes_and_models(app_config, using, ContentType):
 
 def create_contenttypes(app_config, verbosity=2, interactive=True, using=DEFAULT_DB_ALIAS, apps=global_apps, **kwargs):
     """
-    Create content types for models in the given app.
+    Creates content types for models in the given app.
     """
     if not app_config.models_module:
         return
@@ -125,7 +126,7 @@ def create_contenttypes(app_config, verbosity=2, interactive=True, using=DEFAULT
             app_label=app_label,
             model=model_name,
         )
-        for (model_name, model) in app_models.items()
+        for (model_name, model) in six.iteritems(app_models)
         if model_name not in content_types
     ]
     ContentType.objects.using(using).bulk_create(cts)

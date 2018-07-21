@@ -1,8 +1,9 @@
 import re
 
 from django.core import validators
+from django.utils import six
 from django.utils.deconstruct import deconstructible
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 
 @deconstructible
@@ -12,7 +13,7 @@ class ASCIIUsernameValidator(validators.RegexValidator):
         'Enter a valid username. This value may contain only English letters, '
         'numbers, and @/./+/-/_ characters.'
     )
-    flags = re.ASCII
+    flags = re.ASCII if six.PY3 else 0
 
 
 @deconstructible
@@ -22,4 +23,4 @@ class UnicodeUsernameValidator(validators.RegexValidator):
         'Enter a valid username. This value may contain only letters, '
         'numbers, and @/./+/-/_ characters.'
     )
-    flags = 0
+    flags = re.UNICODE if six.PY2 else 0

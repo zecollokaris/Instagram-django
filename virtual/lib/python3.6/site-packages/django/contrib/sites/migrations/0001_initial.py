@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import django.contrib.sites.models
 from django.contrib.sites.models import _simple_domain_name_validator
 from django.db import migrations, models

@@ -1,22 +1,23 @@
-def register(*models, site=None):
+def register(*models, **kwargs):
     """
-    Register the given model(s) classes and wrapped ModelAdmin class with
+    Registers the given model(s) classes and wrapped ModelAdmin class with
     admin site:
 
     @register(Author)
     class AuthorAdmin(admin.ModelAdmin):
         pass
 
-    The `site` kwarg is an admin site to use instead of the default admin site.
+    A kwarg of `site` can be passed as the admin site, otherwise the default
+    admin site will be used.
     """
     from django.contrib.admin import ModelAdmin
-    from django.contrib.admin.sites import site as default_site, AdminSite
+    from django.contrib.admin.sites import site, AdminSite
 
     def _model_admin_wrapper(admin_class):
         if not models:
             raise ValueError('At least one model must be passed to register.')
 
-        admin_site = site or default_site
+        admin_site = kwargs.pop('site', site)
 
         if not isinstance(admin_site, AdminSite):
             raise ValueError('site must subclass AdminSite')

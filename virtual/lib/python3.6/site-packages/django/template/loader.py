@@ -1,12 +1,18 @@
+from django.utils import six
+from django.utils.deprecation import (
+    DeprecationInstanceCheck, RemovedInDjango20Warning,
+)
+
 from . import engines
+from .base import Origin
 from .exceptions import TemplateDoesNotExist
 
 
 def get_template(template_name, using=None):
     """
-    Load and return a template for the given name.
+    Loads and returns a template for the given name.
 
-    Raise TemplateDoesNotExist if no such template exists.
+    Raises TemplateDoesNotExist if no such template exists.
     """
     chain = []
     engines = _engine_list(using)
@@ -21,13 +27,13 @@ def get_template(template_name, using=None):
 
 def select_template(template_name_list, using=None):
     """
-    Load and return a template for one of the given names.
+    Loads and returns a template for one of the given names.
 
-    Try names in order and return the first template found.
+    Tries names in order and returns the first template found.
 
-    Raise TemplateDoesNotExist if no such template exists.
+    Raises TemplateDoesNotExist if no such template exists.
     """
-    if isinstance(template_name_list, str):
+    if isinstance(template_name_list, six.string_types):
         raise TypeError(
             'select_template() takes an iterable of template names but got a '
             'string: %r. Use get_template() if you want to load a single '
@@ -51,7 +57,7 @@ def select_template(template_name_list, using=None):
 
 def render_to_string(template_name, context=None, request=None, using=None):
     """
-    Load a template and render it with a context. Return a string.
+    Loads a template and renders it with a context. Returns a string.
 
     template_name may be a string or a list of strings.
     """
@@ -64,3 +70,8 @@ def render_to_string(template_name, context=None, request=None, using=None):
 
 def _engine_list(using=None):
     return engines.all() if using is None else [engines[using]]
+
+
+class LoaderOrigin(six.with_metaclass(DeprecationInstanceCheck, Origin)):
+    alternative = 'django.template.Origin'
+    deprecation_warning = RemovedInDjango20Warning

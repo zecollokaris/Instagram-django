@@ -10,7 +10,7 @@ from django.contrib.gis.gdal.geometries import GEO_CLASSES
 
 def ogrinfo(data_source, num_features=10):
     """
-    Walk the available layers in the supplied `data_source`, displaying
+    Walks the available layers in the supplied `data_source`, displaying
     the fields for the first `num_features` features.
     """
 

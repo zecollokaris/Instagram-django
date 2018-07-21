@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import django.contrib.admin.models
 from django.conf import settings
 from django.db import migrations, models

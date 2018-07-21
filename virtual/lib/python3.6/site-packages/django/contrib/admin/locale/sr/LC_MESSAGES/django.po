@@ -1,16 +1,15 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
-# Branko Kokanovic <branko@kokanovic.org>, 2018
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Janos Guljas <janos@resenje.org>, 2011-2012
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 16:49+0100\n"
-"PO-Revision-Date: 2018-01-30 11:44+0000\n"
-"Last-Translator: Branko Kokanovic <branko@kokanovic.org>\n"
+"POT-Creation-Date: 2016-05-17 23:12+0200\n"
+"PO-Revision-Date: 2016-05-21 09:09+0000\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Serbian (http://www.transifex.com/django/django/language/"
 "sr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +35,7 @@ msgid "Delete selected %(verbose_name_plural)s"
 msgstr "Бриши означене објекте класе %(verbose_name_plural)s"
 
 msgid "Administration"
-msgstr "Администрација"
+msgstr ""
 
 msgid "All"
 msgstr "Сви"
@@ -66,10 +65,10 @@ msgid "This year"
 msgstr "Ова година"
 
 msgid "No date"
-msgstr "Нема датума"
+msgstr ""
 
 msgid "Has date"
-msgstr "Има датум"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -91,7 +90,7 @@ msgid "action time"
 msgstr "време радње"
 
 msgid "user"
-msgstr "корисник"
+msgstr ""
 
 msgid "content type"
 msgstr ""
@@ -136,7 +135,7 @@ msgid "Added {name} \"{object}\"."
 msgstr ""
 
 msgid "Added."
-msgstr "Додато."
+msgstr ""
 
 msgid "and"
 msgstr "и"
@@ -208,8 +207,8 @@ msgid "The %(name)s \"%(obj)s\" was deleted successfully."
 msgstr "Објекат „%(obj)s“ класе %(name)s успешно је обрисан."
 
 #, python-format
-msgid "%(name)s with ID \"%(key)s\" doesn't exist. Perhaps it was deleted?"
-msgstr ""
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr "Објекат класе %(name)s са примарним кључем %(key)r не постоји."
 
 #, python-format
 msgid "Add %s"
@@ -460,10 +459,10 @@ msgid "You don't have permission to edit anything."
 msgstr "Немате дозволе да уносите било какве измене."
 
 msgid "Recent actions"
-msgstr "Скорашње акције"
+msgstr ""
 
 msgid "My actions"
-msgstr "Моје акције"
+msgstr ""
 
 msgid "None available"
 msgstr "Нема података"
@@ -634,7 +633,7 @@ msgid ""
 msgstr ""
 
 msgid "Email address:"
-msgstr "Адреса е-поште:"
+msgstr ""
 
 msgid "Reset my password"
 msgstr "Ресетуј моју лозинку"
@@ -660,7 +659,7 @@ msgid "Lookup"
 msgstr "Претражи"
 
 msgid "Currently:"
-msgstr "Тренутно:"
+msgstr ""
 
 msgid "Change:"
-msgstr "Измена:"
+msgstr ""

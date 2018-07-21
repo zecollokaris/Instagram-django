@@ -15,7 +15,7 @@ class MessageFailure(Exception):
 
 def add_message(request, level, message, extra_tags='', fail_silently=False):
     """
-    Attempt to add a message to the request using the 'messages' app.
+    Attempts to add a message to the request using the 'messages' app.
     """
     try:
         messages = request._messages
@@ -36,7 +36,7 @@ def add_message(request, level, message, extra_tags='', fail_silently=False):
 
 def get_messages(request):
     """
-    Return the message storage on the request if it exists, otherwise return
+    Returns the message storage on the request if it exists, otherwise returns
     an empty list.
     """
     return getattr(request, '_messages', [])
@@ -44,10 +44,10 @@ def get_messages(request):
 
 def get_level(request):
     """
-    Return the minimum level of messages to be recorded.
+    Returns the minimum level of messages to be recorded.
 
     The default level is the ``MESSAGE_LEVEL`` setting. If this is not found,
-    use the ``INFO`` level.
+    the ``INFO`` level is used.
     """
     storage = getattr(request, '_messages', default_storage(request))
     return storage.level
@@ -55,10 +55,11 @@ def get_level(request):
 
 def set_level(request, level):
     """
-    Set the minimum level of messages to be recorded, and return ``True`` if
+    Sets the minimum level of messages to be recorded, returning ``True`` if
     the level was recorded successfully.
 
-    If set to ``None``, use the default level (see the get_level() function).
+    If set to ``None``, the default level will be used (see the ``get_level``
+    method).
     """
     if not hasattr(request, '_messages'):
         return False
@@ -67,30 +68,40 @@ def set_level(request, level):
 
 
 def debug(request, message, extra_tags='', fail_silently=False):
-    """Add a message with the ``DEBUG`` level."""
+    """
+    Adds a message with the ``DEBUG`` level.
+    """
     add_message(request, constants.DEBUG, message, extra_tags=extra_tags,
                 fail_silently=fail_silently)
 
 
 def info(request, message, extra_tags='', fail_silently=False):
-    """Add a message with the ``INFO`` level."""
+    """
+    Adds a message with the ``INFO`` level.
+    """
     add_message(request, constants.INFO, message, extra_tags=extra_tags,
                 fail_silently=fail_silently)
 
 
 def success(request, message, extra_tags='', fail_silently=False):
-    """Add a message with the ``SUCCESS`` level."""
+    """
+    Adds a message with the ``SUCCESS`` level.
+    """
     add_message(request, constants.SUCCESS, message, extra_tags=extra_tags,
                 fail_silently=fail_silently)
 
 
 def warning(request, message, extra_tags='', fail_silently=False):
-    """Add a message with the ``WARNING`` level."""
+    """
+    Adds a message with the ``WARNING`` level.
+    """
     add_message(request, constants.WARNING, message, extra_tags=extra_tags,
                 fail_silently=fail_silently)
 
 
 def error(request, message, extra_tags='', fail_silently=False):
-    """Add a message with the ``ERROR`` level."""
+    """
+    Adds a message with the ``ERROR`` level.
+    """
     add_message(request, constants.ERROR, message, extra_tags=extra_tags,
                 fail_silently=fail_silently)

@@ -1,50 +1,32 @@
+from django.conf.urls import url
 from django.contrib.admindocs import views
-from django.urls import path, re_path
 
 urlpatterns = [
-    path(
-        '',
+    url(r'^$',
         views.BaseAdminDocsView.as_view(template_name='admin_doc/index.html'),
-        name='django-admindocs-docroot',
-    ),
-    path(
-        'bookmarklets/',
+        name='django-admindocs-docroot'),
+    url(r'^bookmarklets/$',
         views.BookmarkletsView.as_view(),
-        name='django-admindocs-bookmarklets',
-    ),
-    path(
-        'tags/',
+        name='django-admindocs-bookmarklets'),
+    url(r'^tags/$',
         views.TemplateTagIndexView.as_view(),
-        name='django-admindocs-tags',
-    ),
-    path(
-        'filters/',
+        name='django-admindocs-tags'),
+    url(r'^filters/$',
         views.TemplateFilterIndexView.as_view(),
-        name='django-admindocs-filters',
-    ),
-    path(
-        'views/',
+        name='django-admindocs-filters'),
+    url(r'^views/$',
         views.ViewIndexView.as_view(),
-        name='django-admindocs-views-index',
-    ),
-    path(
-        'views/<view>/',
+        name='django-admindocs-views-index'),
+    url(r'^views/(?P<view>[^/]+)/$',
         views.ViewDetailView.as_view(),
-        name='django-admindocs-views-detail',
-    ),
-    path(
-        'models/',
+        name='django-admindocs-views-detail'),
+    url(r'^models/$',
         views.ModelIndexView.as_view(),
-        name='django-admindocs-models-index',
-    ),
-    re_path(
-        r'^models/(?P<app_label>[^\.]+)\.(?P<model_name>[^/]+)/$',
+        name='django-admindocs-models-index'),
+    url(r'^models/(?P<app_label>[^\.]+)\.(?P<model_name>[^/]+)/$',
         views.ModelDetailView.as_view(),
-        name='django-admindocs-models-detail',
-    ),
-    path(
-        'templates/<path:template>/',
+        name='django-admindocs-models-detail'),
+    url(r'^templates/(?P<template>.*)/$',
         views.TemplateDetailView.as_view(),
-        name='django-admindocs-templates',
-    ),
+        name='django-admindocs-templates'),
 ]

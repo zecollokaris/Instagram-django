@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 import os
 import re
@@ -21,10 +23,10 @@ if lib_path:
     lib_names = None
 elif os.name == 'nt':
     # Windows NT shared libraries
-    lib_names = ['gdal202', 'gdal201', 'gdal20', 'gdal111', 'gdal110', 'gdal19']
+    lib_names = [str('gdal201'), str('gdal20'), str('gdal111'), str('gdal110'), str('gdal19')]
 elif os.name == 'posix':
     # *NIX library names.
-    lib_names = ['gdal', 'GDAL', 'gdal2.2.0', 'gdal2.1.0', 'gdal2.0.0', 'gdal1.11.0', 'gdal1.10.0', 'gdal1.9.0']
+    lib_names = ['gdal', 'GDAL', 'gdal2.1.0', 'gdal2.0.0', 'gdal1.11.0', 'gdal1.10.0', 'gdal1.9.0']
 else:
     raise ImproperlyConfigured('GDAL is unsupported on OS "%s".' % os.name)
 
@@ -57,7 +59,7 @@ if os.name == 'nt':
 
 def std_call(func):
     """
-    Return the correct STDCALL function for certain OSR routines on Win32
+    Returns the correct STDCALL function for certain OSR routines on Win32
     platforms.
     """
     if os.name == 'nt':
@@ -68,19 +70,19 @@ def std_call(func):
 
 # #### Version-information functions. ####
 
-# Return GDAL library version information with the given key.
+# Returns GDAL library version information with the given key.
 _version_info = std_call('GDALVersionInfo')
 _version_info.argtypes = [c_char_p]
 _version_info.restype = c_char_p
 
 
 def gdal_version():
-    "Return only the GDAL version number information."
+    "Returns only the GDAL version number information."
     return _version_info(b'RELEASE_NAME')
 
 
 def gdal_full_version():
-    "Return the full GDAL version information."
+    "Returns the full GDAL version information."
     return _version_info('')
 
 

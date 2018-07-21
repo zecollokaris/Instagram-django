@@ -26,7 +26,7 @@ class AdminLogNode(template.Node):
 @register.tag
 def get_admin_log(parser, token):
     """
-    Populate a template variable with the admin log for the given criteria.
+    Populates a template variable with the admin log for the given criteria.
 
     Usage::
 
