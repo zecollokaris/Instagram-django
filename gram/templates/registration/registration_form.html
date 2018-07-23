@@ -1,80 +1,82 @@
 {%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="register">
 
-        <!-- Output to Display error in Signup -->
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            {% if form.errors %}
-            <p> Some Information Might be Incorrect </p>
-            {% endif %}
-            <!--Collapse Output to Display error in Signup -->
 
-            <!-- BootStrap class to add border to Signup form -->
-            <div class="panel panel-default">
+<!-- Output to Display error in Signup -->
 
-                <!-- Instagram image at the top of Signup form -->
-                
-                    <img src="../../static/images/instalogowhite.png" alt="signuplogo " style="width:250px; height:80px;margin: 5px auto; display: block;">
-                
-                <!--Collaplse Instagram image at the top of Signup form -->
+<div class="registform">
+    {% if form.errors %}
+    <p> Some Information Might be Incorrect </p>
+    {% endif %}
+    <!--Collapse Output to Display error in Signup -->
 
-                <div class="panel-body">
+    <!-- BootStrap class to add border to Signup form -->
+    <div class="panel panel-default">
 
-                    <form action="/accounts/register/" method="post">
-                        {% csrf_token %} {% bootstrap_form form %}
+        <!-- Instagram image at the top of Signup form -->
 
-                        <!-- Sign Up Button -->
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
-                        </div>
+        <img src="../../static/images/instalogowhite.png" alt="signuplogo " style="width:190px; height:70px;margin: 5px auto; display: block;">
 
-                        <div class="col-xs-10"></div>
-                        <h2 class="text-center">
-                            <small>OR</small>
-                        </h2>
-                        <div class="col-xs-2"></div>
+        <!--Collaplse Instagram image at the top of Signup form -->
 
-                        <!-- Signup Button Next to (Do you have an account)! -->
-                        <div class="form-group">
-                            <p class="_g9ean pull-left">Have an account?</p>
-                            <a href="/accounts/login/" class="btn btn-primary btn-sm pull-right">Sign In</a>
-                        </div>
-                        <!--Collapse Signup Button! -->
+        <div class="panel-body">
 
-                        <input type="hidden" name="next" value="{{next}}">
+            <form action="/accounts/register/" method="post">
+                {% csrf_token %} {% bootstrap_form form %}
 
-                    </form>
-
+                <!-- Sign Up Button -->
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
                 </div>
 
-            </div>
+                <div class="col-xs-10"></div>
+                <h2 class="text-center">
+                    <small>OR</small>
+                </h2>
+                <div class="col-xs-2"></div>
+
+                <!-- Signup Button Next to (Do you have an account)! -->
+                <div class="form-group">
+                    <p class="_g9ean pull-left">Have an account?</p>
+                    <a href="/accounts/login/" class="btn btn-primary btn-sm pull-right">Sign In</a>
+                </div>
+                <!--Collapse Signup Button! -->
+
+                <input type="hidden" name="next" value="{{next}}">
+
+            </form>
 
         </div>
 
-        <!-- Play Store and Apple store Images With well text to put them sidebyside! -->
-        <div class="well text-center">
-            <div class="col-md-12">
+    </div>
 
-                <div class="col-md-6">
-                    <div class="panel-heading">
+</div>
 
-                        <img src="../../static/images/playstore.svg" alt="signuplogo " style="width:160px; height:50px ">
 
-                    </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="panel-heading">
+<!-- Play Store and Apple store Images With well text to put them sidebyside! -->
+<div class="regplaystorebtn">
 
-                        <img src="../../static/images/applestore.jpeg" alt="signuplogo " style="width:160px; height:50px ">
 
-                    </div>
-                </div>
+    <div class="googlebtn">
 
-            </div>
-        </div>
-        <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
+        <a href="https://play.google.com/store/search?q=instagram">
+            <img src="../../static/images/playstore.svg" alt="signuplogo " style="width:150px; height:40px ">
+        </a>
+
+    </div>
+
+    <div class="applebtn">
+
+        <a href="https://www.apple.com/us/search/instagram?src=itunes_serp">
+            <img src="../../static/images/applestore.jpeg" alt="signuplogo " style="width:150px; height:40px ">
+        </a>
+
+    </div>
+
+</div>
+<!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
 
     </div>
 </div>

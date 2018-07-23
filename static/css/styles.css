@@ -1,15 +1,4 @@
-                                                                                    /* MEDIA QRYS */
-
-                                                                                    /* Small devices (tablets, 768px and up) */
-@media (min-width:768px @screen-sm-min) { }
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width:992px @screen-md-min) { }
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width:1200px @screen-lg-min) { }
-
-/* landscape phones and smaller */
+         
 
 /* ######################################################################################### */
 
@@ -125,27 +114,108 @@ body {
 
 
 /* ######################################################################################### */
+                                    /* Login In & Registration Form */
+
+                                    /* Login */
+
                                     .logincont{
                                       display: flex;
                                       justify-content: center;
                                       margin-top: 4%;
-                                      margin-left: 
+                                      
                                     }
 
                                     .loginform{
-                                      
+                                      width: 70%;
 
                                     }
+
                                     .playstorebtn{
                                       display: flex;
                                       justify-content: center;
                                       margin-left: -45%;
+                                      
                                     }
 
+                                    /* Registration */
+                                    .registform{
+                                        font-size: 9px;
+                                        width: 50%;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                    }
+                                    .regplaystorebtn{
+                                        display: flex;
+                                        justify-content: center;
+                                        margin-left: -45%;
+                                        margin-left: auto;
+                                        margin-right: 22%;
+                                    }
 
+                                    
+
+                                    /* Collapse Login In & Registration Form */
 
 /* ######################################################################################### */
 
 
 
 
+                                                           /* Small devices (tablets, 768px and up) */
+                                                                                    /* MEDIA QRYS */
+
+/* Large devices (large desktops, 1200px and up) */
+@media (max-width:1200px ) { }
+
+
+
+
+/* Medium devices (desktops, 992px and up) */
+@media (max-width:992px ) {
+    .registform{
+        font-size: 9px;
+        width: 40%;
+        }
+    
+ }
+    
+
+
+
+
+/* landscape phones and smaller */
+       @media (max-width:768px ) {
+           
+    .registform{
+        font-size: 9px;
+        width: 170%;
+        margin-left: auto;
+        margin-right: auto;
+        }
+    
+    .regplaystorebtn{
+        margin-left: 15%;
+    }
+    .register{
+        margin-left: 10%;
+    }
+}         
+
+
+
+
+    /* Smallest screens */
+        @media (max-width:374px ){
+
+    .registform{
+        font-size: 9px;
+        width: 170%;
+        }
+    .regplaystorebtn{
+        display: none;
+    }
+    .register{
+        margin-left: 0%;
+    }
+
+        }
