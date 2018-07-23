@@ -11,10 +11,60 @@ body {
 }
 
 
+/* ######################################################################################### */
+                                    /* Login In & Registration Form */
 
+                                    /* Login */
 
+                                    .logincont{
+                                      display: flex;
+                                      justify-content: center;
+                                      margin-top: 4%;
+                                      width: 108%;
+                                      
+                                    }
+
+                                    .loginimage{
+                                      width: 650px;
+                                      height: 680px;
+                                    }
+
+                                    .loginform{
+                                      width: 70%;
+                                      margin-left: 3%;
+                                      margin-top: 6%;
+
+                                    }
+
+                                    .login-playstorebtn{
+                                      display: flex;
+                                      justify-content: center;
+                                      margin-left: -45%;
+                                      
+                                    }
+
+                                    /* Registration */
+                                    .registform{
+                                        font-size: 9px;
+                                        width: 50%;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                    }
+                                    .regplaystorebtn{
+                                        display: flex;
+                                        justify-content: center;
+                                        margin-left: -45%;
+                                        margin-left: auto;
+                                        margin-right: 22%;
+                                    }
+
+                                    
+
+                                    /* Collapse Login In & Registration Form */
 
 /* ######################################################################################### */
+
+
                                     /*-- Nav Bar Styles -- */
 
 
@@ -99,8 +149,6 @@ body {
 
 
 
-
-
 /* ######################################################################################### */
 
                                     /* Like & Comment Section */
@@ -111,80 +159,61 @@ body {
                                     }
 
 
-
-
-/* ######################################################################################### */
-                                    /* Login In & Registration Form */
-
-                                    /* Login */
-
-                                    .logincont{
-                                      display: flex;
-                                      justify-content: center;
-                                      margin-top: 4%;
-                                      
-                                    }
-
-                                    .loginform{
-                                      width: 70%;
-
-                                    }
-
-                                    .playstorebtn{
-                                      display: flex;
-                                      justify-content: center;
-                                      margin-left: -45%;
-                                      
-                                    }
-
-                                    /* Registration */
-                                    .registform{
-                                        font-size: 9px;
-                                        width: 50%;
-                                        margin-left: auto;
-                                        margin-right: auto;
-                                    }
-                                    .regplaystorebtn{
-                                        display: flex;
-                                        justify-content: center;
-                                        margin-left: -45%;
-                                        margin-left: auto;
-                                        margin-right: 22%;
-                                    }
-
-                                    
-
-                                    /* Collapse Login In & Registration Form */
-
 /* ######################################################################################### */
 
 
+/* Small devices (tablets, 768px and up) */
+        /* MEDIA QRYS */
 
 
-                                                           /* Small devices (tablets, 768px and up) */
-                                                                                    /* MEDIA QRYS */
-
-/* Large devices (large desktops, 1200px and up) */
-@media (max-width:1200px ) { }
-
-
-
-
-/* Medium devices (desktops, 992px and up) */
-@media (max-width:992px ) {
+/* ----------------------------------------------- */
+/* Large devices (large desktops,) */
+@media (max-width:1200px ) {
     .registform{
         font-size: 9px;
-        width: 40%;
+        width: 170%;
         }
+
+        /* Login */
+    .loginimage{
+        width: 20%;
+    }
     
+
+    .loginform{
+        width: 100%;
+    }
+
  }
+
+
+/* ----------------------------------------------- */
+
+/* MEDIUM DEVICES (desktops,) */
+@media (max-width:992px ) {
+
+    .registform{
+        font-size: 9px;
+        width: 170%;
+        }
+
+        /* Login */
+    .loginimage{
+        width: 20%;
+    }
     
+    .login-playstorebtn{
+        display: none;
+    }
 
+    .loginform{
+        width: 170%;
+    }
+}
 
-
-
-/* landscape phones and smaller */
-       @media (max-width:768px ) {
+/* ----------------------------------------------- */
+/* LARGER PHONES */
+@media (max-width:768px ) {
            
     .registform{
         font-size: 9px;
@@ -199,23 +228,91 @@ body {
     .register{
         margin-left: 10%;
     }
+    
+
+    /* LOGIN */
+    .login-playstorebtn{
+        display: none;
+    }
+    .loginimage{
+        display: none;
+    }
+    .loginform{
+        width: 170%;
+    }
+    
+        
 }         
 
 
+/* ----------------------------------------------- */
+    /* MEDIUM SCREENS */
+    @media (max-width:500px ){
 
-
-    /* Smallest screens */
-        @media (max-width:374px ){
-
-    .registform{
-        font-size: 9px;
-        width: 170%;
+        /* Registration */
+        .registform{
+            font-size: 9px;
+            width: 170%;
+            }
+        .regplaystorebtn{
+            display: none;
         }
-    .regplaystorebtn{
-        display: none;
-    }
-    .register{
-        margin-left: 0%;
+        .register{
+            margin-left: 0%;
+        }
+        .regplaystorebtn{
+        margin-left: 15%;
     }
 
+         /* LOGIN  */
+        .login-playstorebtn{
+            display: none;
         }
+        .loginimage{
+            display: none;
+        }
+        .loginform{
+            width: 170%;
+        }
+        .logincont{
+            display: inline;
+        }
+         
+    }
+/* ----------------------------------------------- */
+    /* SMALLEST SCREENS */
+
+    @media (max-width:374px ){
+
+        /* Registration */
+        .registform{
+            font-size: 9px;
+            width: 170%;
+            }
+        .regplaystorebtn{
+            display: none;
+        }
+        .register{
+            margin-left: 0%;
+        }
+
+        /* Login */
+        .logincont{
+            display: inline;
+        }
+        .loginimage{
+            display: none;
+        }
+
+        .loginform{
+            width: 170%;
+        }
+
+        .login-playstorebtn{
+            display: none;
+        }
+
+    }
+
+/* ----------------------------------------------- */
+/* ######################################################################################### */
