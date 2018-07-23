@@ -4,9 +4,8 @@ import socket
 import geoip2.database
 
 from django.conf import settings
-from django.core.validators import ipv4_re
-from django.utils import six
-from django.utils.ipv6 import is_valid_ipv6_address
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_ipv46_address
 
 from .resources import City, Country
 
@@ -22,7 +21,7 @@ class GeoIP2Exception(Exception):
     pass
 
 
-class GeoIP2(object):
+class GeoIP2:
     # The flags for GeoIP memory caching.
     # Try MODE_MMAP_EXT, MODE_MMAP, MODE_FILE in that order.
     MODE_AUTO = 0
@@ -34,7 +33,7 @@ class GeoIP2(object):
     MODE_FILE = 4
     # Load database into memory. Pure Python.
     MODE_MEMORY = 8
-    cache_options = {opt: None for opt in (0, 1, 2, 4, 8)}
+    cache_options = frozenset((MODE_AUTO, MODE_MMAP_EXT, MODE_MMAP, MODE_FILE, MODE_MEMORY))
 
     # Paths to the city & country binary databases.
     _city_file = ''
@@ -78,7 +77,7 @@ class GeoIP2(object):
             path = GEOIP_SETTINGS['GEOIP_PATH']
             if not path:
                 raise GeoIP2Exception('GeoIP path must be provided via parameter or the GEOIP_PATH setting.')
-        if not isinstance(path, six.string_types):
+        if not isinstance(path, str):
             raise TypeError('Invalid path type: %s' % type(path).__name__)
 
         if os.path.isdir(path):
@@ -144,9 +143,9 @@ class GeoIP2(object):
         }
 
     def _check_query(self, query, country=False, city=False, city_or_country=False):
-        "Helper routine for checking the query and database availability."
+        "Check the query and database availability."
         # Making sure a string was passed in for the query.
-        if not isinstance(query, six.string_types):
+        if not isinstance(query, str):
             raise TypeError('GeoIP query must be a string, not type %s' % type(query).__name__)
 
         # Extra checks for the existence of country and city databases.
@@ -158,7 +157,9 @@ class GeoIP2(object):
             raise GeoIP2Exception('Invalid GeoIP city data file: %s' % self._city_file)
 
         # Return the query string back to the caller. GeoIP2 only takes IP addresses.
-        if not (ipv4_re.match(query) or is_valid_ipv6_address(query)):
+        try:
+            validate_ipv46_address(query)
+        except ValidationError:
             query = socket.gethostbyname(query)
 
         return query

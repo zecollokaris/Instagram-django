@@ -1,0 +1,138 @@
+                                                                                    /* MEDIA QRYS */
+
+                                                                                    /* Small devices (tablets, 768px and up) */
+@media (min-width:768px @screen-sm-min) { }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width:992px @screen-md-min) { }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width:1200px @screen-lg-min) { }
+
+/* landscape phones and smaller */
+
+/* ######################################################################################### */
+
+
+
+/*Text body*/
+
+body {
+
+}
+
+
+
+
+
+/* ######################################################################################### */
+                                    /*-- Nav Bar Styles -- */
+
+
+                                    .navbar-default {
+                                        border: 5;
+                                        font-weight: bold;
+                                        padding: -4px;
+                                        
+                                    }
+                                    .navbar{
+                                      box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.12);
+                                    }
+                                    /*-- Search Bar -- */
+
+                                    .center{
+                                        margin-left: 200%;
+                                    }
+
+/* ######################################################################################### */
+
+
+
+                                    /* HOME PAGE */
+
+
+                                    .homebody{
+                                      margin-top: 10%;
+                                      margin-left: 25%;
+
+                                    }
+
+
+
+                                    .panel-default{
+                                      padding-bottom: 3%;
+                                      width: 56%;
+                                      
+                                    }
+
+                                    .imagepadding{
+                                        padding-bottom: 70px;
+                                    }
+
+
+/* ######################################################################################### */
+
+                                    /* EXPLORE PAGE */
+
+
+                                    .explorebody{
+                                      margin-top: 15%;
+
+                                    }
+
+
+                                    .explorepics {
+                                      column-count: 3;
+                                      column-gap: 10px;
+                                      top: 10;
+
+
+                                    }
+
+                                    .picspace{
+                                        
+                                      padding: 20px;
+                                      padding-bottom: 70px;
+
+                                    }
+                                    
+
+
+/* ######################################################################################### */
+                                      .uploadbody{
+                                      margin-top: 15%;
+                                      width: "40";
+                                      height: "40";
+                                      
+
+                                      
+                                    }
+
+
+
+
+
+/* ######################################################################################### */
+
+                                    /* Like & Comment Section */
+
+                                    .likesect{
+                                      margin-top: 1%;
+                                      margin-left: 1%;
+                                    }
+
+
+
+
+/* ######################################################################################### */
+
+
+
+
+
+
+/* ######################################################################################### */
+
+
+
+

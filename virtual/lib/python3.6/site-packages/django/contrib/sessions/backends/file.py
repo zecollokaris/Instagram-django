@@ -1,5 +1,4 @@
 import datetime
-import errno
 import logging
 import os
 import shutil
@@ -12,17 +11,16 @@ from django.contrib.sessions.backends.base import (
 from django.contrib.sessions.exceptions import InvalidSessionKey
 from django.core.exceptions import ImproperlyConfigured, SuspiciousOperation
 from django.utils import timezone
-from django.utils.encoding import force_text
 
 
 class SessionStore(SessionBase):
     """
-    Implements a file based session store.
+    Implement a file based session store.
     """
     def __init__(self, session_key=None):
         self.storage_path = type(self)._get_storage_path()
         self.file_prefix = settings.SESSION_COOKIE_NAME
-        super(SessionStore, self).__init__(session_key)
+        super().__init__(session_key)
 
     @classmethod
     def _get_storage_path(cls):
@@ -53,7 +51,7 @@ class SessionStore(SessionBase):
         # Make sure we're not vulnerable to directory traversal. Session keys
         # should always be md5s, so they should never contain directory
         # components.
-        if not set(session_key).issubset(set(VALID_KEY_CHARS)):
+        if not set(session_key).issubset(VALID_KEY_CHARS):
             raise InvalidSessionKey(
                 "Invalid characters in session key")
 
@@ -93,7 +91,7 @@ class SessionStore(SessionBase):
                 except (EOFError, SuspiciousOperation) as e:
                     if isinstance(e, SuspiciousOperation):
                         logger = logging.getLogger('django.security.%s' % e.__class__.__name__)
-                        logger.warning(force_text(e))
+                        logger.warning(str(e))
                     self.create()
 
                 # Remove expired sessions.
@@ -133,13 +131,12 @@ class SessionStore(SessionBase):
                 flags |= os.O_EXCL | os.O_CREAT
             fd = os.open(session_file_name, flags)
             os.close(fd)
-
-        except OSError as e:
-            if must_create and e.errno == errno.EEXIST:
-                raise CreateError
-            if not must_create and e.errno == errno.ENOENT:
+        except FileNotFoundError:
+            if not must_create:
                 raise UpdateError
-            raise
+        except FileExistsError:
+            if must_create:
+                raise CreateError
 
         # Write the session file without interfering with other threads
         # or processes.  By writing to an atomically generated temporary
@@ -175,7 +172,6 @@ class SessionStore(SessionBase):
             finally:
                 if not renamed:
                     os.unlink(output_file_name)
-
         except (OSError, IOError, EOFError):
             pass
 

@@ -1,7 +1,4 @@
-from __future__ import unicode_literals
-
 import json
-import warnings
 
 from django import forms
 from django.conf import settings
@@ -13,12 +10,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.fields.related import ManyToManyRel
 from django.forms.utils import flatatt
 from django.template.defaultfilters import capfirst, linebreaksbr
-from django.utils import six
-from django.utils.deprecation import RemovedInDjango20Warning
-from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 ACTION_CHECKBOX_NAME = '_selected_action'
 
@@ -36,7 +30,7 @@ class ActionForm(forms.Form):
 checkbox = forms.CheckboxInput({'class': 'action-select'}, lambda value: False)
 
 
-class AdminForm(object):
+class AdminForm:
     def __init__(self, form, fieldsets, prepopulated_fields, readonly_fields=None, model_admin=None):
         self.form, self.fieldsets = form, fieldsets
         self.prepopulated_fields = [{
@@ -73,7 +67,7 @@ class AdminForm(object):
         return media
 
 
-class Fieldset(object):
+class Fieldset:
     def __init__(self, form, name=None, readonly_fields=(), fields=(), classes=(),
                  description=None, model_admin=None):
         self.form = form
@@ -100,10 +94,10 @@ class Fieldset(object):
             yield Fieldline(self.form, field, self.readonly_fields, model_admin=self.model_admin)
 
 
-class Fieldline(object):
+class Fieldline:
     def __init__(self, form, field, readonly_fields=None, model_admin=None):
         self.form = form  # A django.forms.Form instance
-        if not hasattr(field, "__iter__") or isinstance(field, six.text_type):
+        if not hasattr(field, "__iter__") or isinstance(field, str):
             self.fields = [field]
         else:
             self.fields = field
@@ -131,7 +125,7 @@ class Fieldline(object):
         )
 
 
-class AdminField(object):
+class AdminField:
     def __init__(self, form, field, is_first):
         self.field = form[field]  # A django.forms.BoundField instance
         self.is_first = is_first  # Whether this field is first on the line
@@ -140,7 +134,7 @@ class AdminField(object):
 
     def label_tag(self):
         classes = []
-        contents = conditional_escape(force_text(self.field.label))
+        contents = conditional_escape(self.field.label)
         if self.is_checkbox:
             classes.append('vCheckboxLabel')
 
@@ -160,7 +154,7 @@ class AdminField(object):
         return mark_safe(self.field.errors.as_ul())
 
 
-class AdminReadonlyField(object):
+class AdminReadonlyField:
     def __init__(self, form, field, is_first, model_admin=None):
         # Make self.field look a little bit like a field. This means that
         # {{ field.name }} must be a useful class name to identify the field.
@@ -198,9 +192,7 @@ class AdminReadonlyField(object):
         if not self.is_first:
             attrs["class"] = "inline"
         label = self.field['label']
-        return format_html('<label{}>{}:</label>',
-                           flatatt(attrs),
-                           capfirst(force_text(label)))
+        return format_html('<label{}>{}:</label>', flatatt(attrs), capfirst(label))
 
     def contents(self):
         from django.contrib.admin.templatetags.admin_list import _boolean_icon
@@ -218,27 +210,17 @@ class AdminReadonlyField(object):
                     if hasattr(value, "__html__"):
                         result_repr = value
                     else:
-                        result_repr = force_text(value)
-                        if getattr(attr, "allow_tags", False):
-                            warnings.warn(
-                                "Deprecated allow_tags attribute used on %s. "
-                                "Use django.utils.html.format_html(), format_html_join(), "
-                                "or django.utils.safestring.mark_safe() instead." % attr,
-                                RemovedInDjango20Warning
-                            )
-                            result_repr = mark_safe(value)
-                        else:
-                            result_repr = linebreaksbr(result_repr)
+                        result_repr = linebreaksbr(value)
             else:
                 if isinstance(f.remote_field, ManyToManyRel) and value is not None:
-                    result_repr = ", ".join(map(six.text_type, value.all()))
+                    result_repr = ", ".join(map(str, value.all()))
                 else:
                     result_repr = display_for_field(value, f, self.empty_value_display)
                 result_repr = linebreaksbr(result_repr)
         return conditional_escape(result_repr)
 
 
-class InlineAdminFormSet(object):
+class InlineAdminFormSet:
     """
     A wrapper around an inline formset for use in the admin system.
     """
@@ -305,10 +287,10 @@ class InlineAdminFormSet(object):
             'name': '#%s' % self.formset.prefix,
             'options': {
                 'prefix': self.formset.prefix,
-                'addText': ugettext('Add another %(verbose_name)s') % {
+                'addText': gettext('Add another %(verbose_name)s') % {
                     'verbose_name': capfirst(verbose_name),
                 },
-                'deleteText': ugettext('Remove'),
+                'deleteText': gettext('Remove'),
             }
         })
 
@@ -339,7 +321,7 @@ class InlineAdminForm(AdminForm):
         self.original = original
         self.show_url = original and view_on_site_url is not None
         self.absolute_url = view_on_site_url
-        super(InlineAdminForm, self).__init__(form, fieldsets, prepopulated_fields, readonly_fields, model_admin)
+        super().__init__(form, fieldsets, prepopulated_fields, readonly_fields, model_admin)
 
     def __iter__(self):
         for name, options in self.fieldsets:
@@ -381,7 +363,7 @@ class InlineAdminForm(AdminForm):
 class InlineFieldset(Fieldset):
     def __init__(self, formset, *args, **kwargs):
         self.formset = formset
-        super(InlineFieldset, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __iter__(self):
         fk = getattr(self.formset, "fk", None)
@@ -392,11 +374,9 @@ class InlineFieldset(Fieldset):
 
 
 class AdminErrorList(forms.utils.ErrorList):
-    """
-    Stores all errors for the form/formsets in an add/change stage view.
-    """
+    """Store errors for the form/formsets in an add/change view."""
     def __init__(self, form, inline_formsets):
-        super(AdminErrorList, self).__init__()
+        super().__init__()
 
         if form.is_bound:
             self.extend(form.errors.values())

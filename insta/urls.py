@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from django.urls import path, include
+from django.urls import include, path
 
 from gram import views
 
@@ -19,5 +19,8 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('', include('gram.urls')),
+
+    #url for registration
+    path('accounts/', include('registration.backends.simple.urls')),
 
 ]

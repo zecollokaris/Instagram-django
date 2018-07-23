@@ -1,0 +1,39 @@
+{% load bootstrap3 %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- STYLING CSS LINKED HERE -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- FONT AWESOME ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <title> Insta</title>
+    {% block styles%} {% bootstrap_css %} {% endblock %}
+</head>
+
+<body>
+    {% include 'display/navbar.html' %}
+
+    <div class="container-fluid" id="body">
+        {% block content %} {% endblock %}
+    </div>
+
+    {% block scripts %}
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ajax-csrf-auth.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script> 
+    {% bootstrap_javascript %} 
+    {% endblock %}
+
+</body>
+
+</html>

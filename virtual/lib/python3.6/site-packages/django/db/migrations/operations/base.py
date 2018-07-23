@@ -1,9 +1,7 @@
-from __future__ import unicode_literals
-
 from django.db import router
 
 
-class Operation(object):
+class Operation:
     """
     Base class for migration operations.
 
@@ -43,7 +41,7 @@ class Operation(object):
 
     def deconstruct(self):
         """
-        Returns a 3-tuple of class import path (or just name if it lives
+        Return a 3-tuple of class import path (or just name if it lives
         under django.db.migrations), positional arguments, and keyword
         arguments.
         """
@@ -55,21 +53,21 @@ class Operation(object):
 
     def state_forwards(self, app_label, state):
         """
-        Takes the state from the previous migration, and mutates it
+        Take the state from the previous migration, and mutate it
         so that it matches what this migration would perform.
         """
         raise NotImplementedError('subclasses of Operation must provide a state_forwards() method')
 
     def database_forwards(self, app_label, schema_editor, from_state, to_state):
         """
-        Performs the mutation on the database schema in the normal
+        Perform the mutation on the database schema in the normal
         (forwards) direction.
         """
         raise NotImplementedError('subclasses of Operation must provide a database_forwards() method')
 
     def database_backwards(self, app_label, schema_editor, from_state, to_state):
         """
-        Performs the mutation on the database schema in the reverse
+        Perform the mutation on the database schema in the reverse
         direction - e.g. if this were CreateModel, it would in fact
         drop the model's table.
         """
@@ -77,13 +75,13 @@ class Operation(object):
 
     def describe(self):
         """
-        Outputs a brief summary of what the action does.
+        Output a brief summary of what the action does.
         """
         return "%s: %s" % (self.__class__.__name__, self._constructor_args)
 
     def references_model(self, name, app_label=None):
         """
-        Returns True if there is a chance this operation references the given
+        Return True if there is a chance this operation references the given
         model name (as a string), with an optional app label for accuracy.
 
         Used for optimization. If in doubt, return True;
@@ -95,7 +93,7 @@ class Operation(object):
 
     def references_field(self, model_name, name, app_label=None):
         """
-        Returns True if there is a chance this operation references the given
+        Return True if there is a chance this operation references the given
         field name, with an optional app label for accuracy.
 
         Used for optimization. If in doubt, return True.
@@ -104,7 +102,7 @@ class Operation(object):
 
     def allow_migrate_model(self, connection_alias, model):
         """
-        Returns if we're allowed to migrate the model.
+        Return wether or not a model may be migrated.
 
         This is a thin wrapper around router.allow_migrate_model() that
         preemptively rejects any proxy, swapped out, or unmanaged model.

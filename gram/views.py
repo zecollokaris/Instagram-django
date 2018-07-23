@@ -1,9 +1,14 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf.urls.static import static
 from django.contrib.auth.models import User
 from . import models
 
+from django.core.mail import send_mail
+'''
+send mail enables sends confirmation mail using @gmail
+'''
 
 
 #The @login_required declarator limits access of view function to only 
@@ -16,14 +21,12 @@ from . import models
 
 
 
-
 #################################################################################################################################################################################
 #LOGIN PAGE VIEW FUNCTION
 #################################################################################################################################################################################
 
 #Login page view function
 def login(request):
-    
     return render(request, 'registration/login.html')
     
 #################################################################################################################################################################################

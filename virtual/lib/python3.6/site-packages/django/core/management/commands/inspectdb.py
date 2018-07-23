@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import keyword
 import re
 from collections import OrderedDict
@@ -7,14 +5,12 @@ from collections import OrderedDict
 from django.core.management.base import BaseCommand, CommandError
 from django.db import DEFAULT_DB_ALIAS, connections
 from django.db.models.constants import LOOKUP_SEP
-from django.utils.encoding import force_text
 
 
 class Command(BaseCommand):
     help = "Introspects the database tables in the given database and outputs a Django model module."
-
     requires_system_checks = False
-
+    stealth_options = ('table_name_filter', )
     db_module = 'django.db'
 
     def add_arguments(self, parser):
@@ -56,8 +52,6 @@ class Command(BaseCommand):
                 "Django to create, modify, and delete the table"
             )
             yield "# Feel free to rename the models, but don't rename db_table values or field names."
-            yield "from __future__ import unicode_literals"
-            yield ''
             yield 'from %s import models' % self.db_module
             known_models = []
             tables_to_introspect = options['table'] or connection.introspection.table_names(cursor)
@@ -83,7 +77,7 @@ class Command(BaseCommand):
                     table_description = connection.introspection.get_table_description(cursor, table_name)
                 except Exception as e:
                     yield "# Unable to inspect table '%s'" % table_name
-                    yield "# The error was: %s" % force_text(e)
+                    yield "# The error was: %s" % e
                     continue
 
                 yield ''

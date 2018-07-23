@@ -1,1 +1,88 @@
-this is the registration page
+{%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
+<div class="container">
+    <div style="display: flex; flex-direction: left; padding: -70" class="row">
+        <!-- Image beside Login-Form -->
+        
+        <div class="col-md-5 ">
+            <img src="../../static/images/instagrampicture2.png " alt="instagram login phone " style="width:500px; height:600px ">
+        </div>
+        <!-- Output to Display error in login -->
+        
+            {% if form.errors %}
+            <p > Password or Username is incorrect </p>
+            {% endif %}
+            <!--Collapse Output to Display error in login -->
+        
+
+            <!-- BootStrap class to add border to login form -->
+            <div class="panel panel-default">
+
+                <!-- Instagram image at the top of Login form -->
+                <div class="panel-heading">
+                    <img src="../../static/images/instalogo.svg" alt="signuplogo " style="width:330px; height:100px ">
+                </div>
+                <!--Collaplse Instagram image at the top of Login form -->
+
+                <div class="panel-body">
+
+                    <form action="/accounts/login/" method="post">
+                        {% csrf_token %} {% bootstrap_form form%}
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
+                        </div>
+
+                        <div class="col-xs-10"></div>
+                        <h2 class="text-center">
+                            <small>OR</small>
+                        </h2>
+                        <div class="col-xs-2"></div>
+
+                        <!-- Signup Button Next to (Do you have an account)! -->
+                        <div class="form-group">
+                            <p class="_g9ean pull-left">Don't have an account?</p>
+                            <a href="/accounts/register/" class="btn btn-primary btn-sm pull-right">Sign Up</a>
+                        </div>
+                        <!--Collapse Signup Button! -->
+                        <input type="hidden" name="next" value="{{next}}">
+
+                    </form>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <!-- Play Store and Apple store Images With well text to put them sidebyside! -->
+        <div class="well text-center">
+            <div class="col-md-12">
+
+                <div class="col-md-6">
+                    <div class="panel-heading">
+
+                        <img src="../../static/images/playstore.svg" alt="signuplogo " style="width:160px; height:50px ">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel-heading">
+
+                        <img src="../../static/images/applestore.jpeg" alt="signuplogo " style="width:160px; height:50px ">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
+
+    </div>
+
+</div>
+
+{% endblock %}

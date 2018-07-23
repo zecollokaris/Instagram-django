@@ -68,16 +68,15 @@ class Command(BaseCommand):
                  'an integer or a string identifier for the layer.',
         )
         parser.add_argument(
-            '--multi-geom', action='store_true',
-            dest='multi_geom', default=False,
+            '--multi-geom', action='store_true', dest='multi_geom',
             help='Treat the geometry in the data source as a geometry collection.',
         )
         parser.add_argument(
             '--name-field', dest='name_field',
-            help='Specifies a field name to return for the `__unicode__`/`__str__` function.',
+            help='Specifies a field name to return for the __str__() method.',
         )
         parser.add_argument(
-            '--no-imports', action='store_false', dest='imports', default=True,
+            '--no-imports', action='store_false', dest='imports',
             help='Do not include `from django.contrib.gis.db import models` statement.',
         )
         parser.add_argument(
@@ -125,10 +124,10 @@ class Command(BaseCommand):
             # This extra legwork is so that the dictionary definition comes
             # out in the same order as the fields in the model definition.
             rev_mapping = {v: k for k, v in mapping_dict.items()}
-            output.extend(['', '# Auto-generated `LayerMapping` dictionary for %s model' % model_name,
+            output.extend(['', '', '# Auto-generated `LayerMapping` dictionary for %s model' % model_name,
                            '%s_mapping = {' % model_name.lower()])
-            output.extend("    '%s' : '%s'," % (
+            output.extend("    '%s': '%s'," % (
                 rev_mapping[ogr_fld], ogr_fld) for ogr_fld in ds[options['layer_key']].fields
             )
-            output.extend(["    '%s' : '%s'," % (options['geom_name'], mapping_dict[options['geom_name']]), '}'])
+            output.extend(["    '%s': '%s'," % (options['geom_name'], mapping_dict[options['geom_name']]), '}'])
         return '\n'.join(output) + '\n'

@@ -1,0 +1,41 @@
+{% load bootstrap3 %} 
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- STYLING CSS LINKED HERE -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- <link href="{% static 'vendor/font-awesome-4.6.3/css/font-awesome.min.css' %}" rel="stylesheet"> -->
+    <title>Instagram</title>
+    {% block styles%} 
+        {% bootstrap_css%} 
+    {% endblock %}
+</head>
+
+<body>
+
+
+
+    <div class="container-fluid" id="body">
+        {% block content %} 
+        {%include "registration/navbar.html" %}
+        
+        {% endblock %}
+    </div>
+
+
+     {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    {% bootstrap_javascript %} 
+    {% endblock %}
+
+</body>
+
+</html>
+

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.forms import ModelForm, modelformset_factory
@@ -15,10 +13,10 @@ class BaseGenericInlineFormSet(BaseModelFormSet):
                  prefix=None, queryset=None, **kwargs):
         opts = self.model._meta
         self.instance = instance
-        self.rel_name = '-'.join((
-            opts.app_label, opts.model_name,
-            self.ct_field.name, self.ct_fk_field.name,
-        ))
+        self.rel_name = (
+            opts.app_label + '-' + opts.model_name + '-' +
+            self.ct_field.name + '-' + self.ct_fk_field.name
+        )
         if self.instance is None or self.instance.pk is None:
             qs = self.model._default_manager.none()
         else:
@@ -29,16 +27,15 @@ class BaseGenericInlineFormSet(BaseModelFormSet):
                     self.instance, for_concrete_model=self.for_concrete_model),
                 self.ct_fk_field.name: self.instance.pk,
             })
-        super(BaseGenericInlineFormSet, self).__init__(
-            queryset=qs, data=data, files=files,
-            prefix=prefix,
-            **kwargs
-        )
+        super().__init__(queryset=qs, data=data, files=files, prefix=prefix, **kwargs)
 
     @classmethod
     def get_default_prefix(cls):
         opts = cls.model._meta
-        return '-'.join((opts.app_label, opts.model_name, cls.ct_field.name, cls.ct_fk_field.name))
+        return (
+            opts.app_label + '-' + opts.model_name + '-' +
+            cls.ct_field.name + '-' + cls.ct_fk_field.name
+        )
 
     def save_new(self, form, commit=True):
         setattr(form.instance, self.ct_field.get_attname(), ContentType.objects.get_for_model(self.instance).pk)
@@ -55,7 +52,7 @@ def generic_inlineformset_factory(model, form=ModelForm,
                                   validate_max=False, for_concrete_model=True,
                                   min_num=None, validate_min=False):
     """
-    Returns a ``GenericInlineFormSet`` for the given kwargs.
+    Return a ``GenericInlineFormSet`` for the given kwargs.
 
     You must provide ``ct_field`` and ``fk_field`` if they are different from
     the defaults ``content_type`` and ``object_id`` respectively.
