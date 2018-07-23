@@ -125,9 +125,22 @@ body {
 
 
 /* ######################################################################################### */
+                                    .logincont{
+                                      display: flex;
+                                      justify-content: center;
+                                      margin-top: 4%;
+                                      margin-left: 
+                                    }
 
+                                    .loginform{
+                                      
 
-
+                                    }
+                                    .playstorebtn{
+                                      display: flex;
+                                      justify-content: center;
+                                      margin-left: -45%;
+                                    }
 
 
 

@@ -1,13 +1,14 @@
 {%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
 <div class="container">
-    <div style="display: flex; flex-direction: left; padding: -70" class="row">
+    <div style="width: 108%;" class="logincont">
         <!-- Image beside Login-Form -->
         
-        <div class="col-md-5 ">
-            <img src="../../static/images/instagrampicture2.png " alt="instagram login phone " style="width:500px; height:600px ">
+        <div class="loginimage">
+            <img src="../../static/images/instagrampicture2.png " alt="instagram login phone " style="width:650px; height:680px ">
         </div>
-        <!-- Output to Display error in login -->
         
+        <!-- Output to Display error in login -->
+        <div style="width: 70%;" class="loginform">
             {% if form.errors %}
             <p > Password or Username is incorrect </p>
             {% endif %}
@@ -15,12 +16,12 @@
         
 
             <!-- BootStrap class to add border to login form -->
-            <div class="panel panel-default">
+            <div  class="panel panel-default">
 
                 <!-- Instagram image at the top of Login form -->
-                <div class="panel-heading">
-                    <img src="../../static/images/instalogo.svg" alt="signuplogo " style="width:330px; height:100px ">
-                </div>
+                
+                    <img src="../../static/images/instalogowhite.png" alt="signuplogo " style="width:250px; height:80px;margin: 5px auto; display: block;">
+                
                 <!--Collaplse Instagram image at the top of Login form -->
 
                 <div class="panel-body">
@@ -39,7 +40,7 @@
                         <div class="col-xs-2"></div>
 
                         <!-- Signup Button Next to (Do you have an account)! -->
-                        <div class="form-group">
+                        <div class="panel-heading">
                             <p class="_g9ean pull-left">Don't have an account?</p>
                             <a href="/accounts/register/" class="btn btn-primary btn-sm pull-right">Sign Up</a>
                         </div>
@@ -48,41 +49,37 @@
 
                     </form>
 
-
+                    
                 </div>
 
-
+                
 
             </div>
+            <!-- Play Store and Apple store Images With well text to put them sidebyside! -->
+            <div class="playstorebtn">
+            
+            
+                <div class="googlebtn">
+            
+                    <a href="https://play.google.com/store/search?q=instagram"><img src="../../static/images/playstore.svg" alt="signuplogo " style="width:150px; height:40px "></a>
+            
+                </div>
+            
+                <div class="applebtn">
+            
+                    <a href="https://www.apple.com/us/search/instagram?src=itunes_serp"><img src="../../static/images/applestore.jpeg"  alt="signuplogo " style="width:150px; height:40px "></a>
+            
+                </div>
+            
+            </div>
+            <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
 
         </div>
 
-        <!-- Play Store and Apple store Images With well text to put them sidebyside! -->
-        <div class="well text-center">
-            <div class="col-md-12">
-
-                <div class="col-md-6">
-                    <div class="panel-heading">
-
-                        <img src="../../static/images/playstore.svg" alt="signuplogo " style="width:160px; height:50px ">
-
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="panel-heading">
-
-                        <img src="../../static/images/applestore.jpeg" alt="signuplogo " style="width:160px; height:50px ">
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
 
     </div>
 
+           
 </div>
 
 {% endblock %}
