@@ -1,0 +1,32 @@
+{% extends 'instaplate/base.html' %} 
+{% load bootstrap3 %} 
+{% block content %} 
+{{block.super}}
+
+<div class="container">
+    <div class="uploadbody">
+
+<form action="{%url 'upload'%}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" /> {% for field in form %}
+        <p>
+            {{ field.label_tag }}
+            <br> {{ field }}
+            <br> {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %} {% if field.help_text %}
+            <p>
+                <small style="color: grey">{{ field.help_text }}</small>
+            </p>
+            {% endif %}
+        </p>
+        {% endfor %}
+        <button type="submit">Post</button>
+    </form>
+
+    </div>
+</div>
+
+{% endblock %}
