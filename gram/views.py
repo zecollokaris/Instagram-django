@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf.urls import url,include
 from django.contrib.auth import authenticate, login, logout
-
+from .forms import PostForm
 from django.conf.urls.static import static
 from .models import Profile, Image
 from django.contrib.auth.models import User
@@ -99,7 +99,7 @@ def upload(request):
             return redirect('/')
     else:
         form =PostForm
-    return render(request, 'instaplate/upload.html', {"form": form})
+    return render(request, 'display/upload.html', {"form": form})
 
 #################################################################################################################################################################################
 #################################################################################################################################################################################
