@@ -3,6 +3,12 @@
 {% load bootstrap3 %} 
 {% block content %} 
 {{block.super}}
+
+{% if request.user.is_authenticated %}
+
+{% else %}
+<p>You must be authenticated</p>
+{% endif %}
 <div class="homebody">
     <div class="container">
 

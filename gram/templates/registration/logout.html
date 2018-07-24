@@ -1,0 +1,76 @@
+{%extends "registration/base.html"%} {% load bootstrap3 %} {% block content %}
+<div class="container">
+    <div class="logincont">
+        <!-- Image beside Login-Form -->
+        
+        <div class="loginimage">
+            <img src="../../static/images/instagrampicture2.png " alt="instagram login phone ">
+        </div>
+        
+        <!-- Output to Display error in login -->
+        <div class="loginform">
+            {% if form.errors %}
+            <p > Password or Username is incorrect </p>
+            {% endif %}
+            <!--Collapse Output to Display error in login -->
+        
+
+            <!-- BootStrap class to add border to login form -->
+            <div  class="panel panel-default">
+
+                <!-- Instagram image at the top of Login form -->
+                    <img src="../../static/images/instalogowhite.png" alt="signuplogo " style="width:250px; height:80px;margin: 5px auto; display: block;">
+                 <div class="panel-body">
+                     
+                    
+                    <!--Collaplse Instagram image at the top of Login form -->
+
+                    <h1><strong>You Are Signed</strong></h1>
+                    <!-- Signup Button Next to (Do you have an account)! -->
+                    <div style="margin-top: 10%" class="panel-heading">
+                        <p class="_g9ean pull-left">Want to have an account?</p>
+                        <a href="/accounts/register/" class="btn btn-primary btn-sm pull-right">Sign Up</a>
+                    </div>
+                    <!--Collapse Signup Button! -->
+                    
+                    <!-- SignIN Button Next to (Do you have an account)! -->
+                    <div style="margin-top: 20%;" class="panel-heading">
+                        <p class="_g9ean pull-left">Have an account?</p>
+                        <a href="/accounts/login/" class="btn btn-primary btn-sm pull-right">Sign In</a>
+                    </div>
+                    <!--Collapse SignIN Button! -->
+
+
+                 </div>
+
+            </div>
+            <!-- Play Store and Apple store Images With well text to put them sidebyside! -->
+            <div class="login-playstorebtn">
+            
+            
+                <div class="googlebtn">
+            
+                    <a href="https://play.google.com/store/search?q=instagram"><img src="../../static/images/playstore.svg" alt="signuplogo " style="width:150px; height:40px "></a>
+            
+                </div>
+            
+                <div class="applebtn">
+            
+                    <a href="https://www.apple.com/us/search/instagram?src=itunes_serp"><img src="../../static/images/applestore.jpeg"  alt="signuplogo " style="width:150px; height:40px "></a>
+            
+                </div>
+            
+            </div>
+            <!--Collapse! Play Store and Apple store Images With well text to put them sidebyside! -->
+
+        </div>
+
+
+    </div>
+
+           
+</div>
+
+{% endblock %}
+
+
