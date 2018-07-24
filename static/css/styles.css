@@ -280,6 +280,7 @@ body {
 
     .navbar-fixed-bottom{
         display: inline;
+        box-shadow: 0px 1px 30px 5px rgba(0, 0, 0, 0.12);
     }
     .center{
         display: none;
@@ -292,6 +293,7 @@ body {
     .navbar-collapse{
         margin-top: -200%;
         margin-left: 20%;
+        
     }
 
     .phonenav{
@@ -300,6 +302,7 @@ body {
         text-align: center;
         display: flex;
         margin-left: 25%;
+        
     }
     .phonenavcont{
         list-style: none;
@@ -369,10 +372,12 @@ body {
     .center{
         display: none;
     }
+    
 
     .homenav{
         margin-top: -9%;
         margin-left: 13%;
+        
     }
     .navbar-collapse{
         margin-top: -200%;
@@ -392,9 +397,11 @@ body {
         margin: 0;
         padding: 0;
         display: flex;
+        
     }
     .phonenavcont ul{
         list-style: none;
+        
     }
     .phonenavcont ul li{
         list-style: none;
@@ -474,6 +481,7 @@ body {
         text-align: center;
         display: flex;
         margin-left: 9%;
+        
     }
     .phonenavcont{
         list-style: none;
@@ -503,6 +511,7 @@ body {
     .fa-heart-o{
         padding-right: 50px;
     }
+    
     }
 
 /* ----------------------------------------------- */
