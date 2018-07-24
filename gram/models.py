@@ -66,7 +66,7 @@ class Image(models.Model):
 
     -imageuploader_profile-: this is the person who posted the picture (User)
         '''
-    image = models.ImageField(upload_to ='picsagram/')
+    image = models.ImageField(upload_to ='pictsagram/')
     image_caption = models.CharField(max_length=700)
     tag_someone = models.CharField(max_length=50,blank=True)
     imageuploader_profile = models.ForeignKey('Profile', on_delete=models.CASCADE,null='True', blank=True)
