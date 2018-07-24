@@ -83,6 +83,10 @@ body {
                                         margin-left: 200%;
                                     }
 
+                                    .phonenav{
+                                        display: none;
+                                    }
+
 /* ######################################################################################### */
 
 
@@ -96,6 +100,9 @@ body {
 
                                     }
 
+                                    .navbar-fixed-bottom{
+                                        display: none;
+                                    }
 
 
                                     .panel-default{
@@ -184,6 +191,13 @@ body {
         width: 100%;
     }
 
+    .phonenav{
+        display: none;
+    }
+
+    .navbar-fixed-bottom{
+        display: none;
+    }
  }
 
 
@@ -209,6 +223,27 @@ body {
     .loginform{
         width: 170%;
     }
+
+    /* Nav Bar */
+    .center{
+        display: none;
+    }
+    .homenav{
+        margin-top: -17%;
+        margin-left: 25%;
+    }
+
+    .phonenav{
+        display: none;
+    }
+    
+    .fixed-bottom{
+        display: none;
+    }
+
+    .navbar-fixed-bottom{
+        display: none;
+    }
 }
 
 /* ----------------------------------------------- */
@@ -230,7 +265,7 @@ body {
     }
     
 
-    /* LOGIN */
+    /* Login */
     .login-playstorebtn{
         display: none;
     }
@@ -240,8 +275,60 @@ body {
     .loginform{
         width: 170%;
     }
-    
+
+    /* Navbar */
+
+    .navbar-fixed-bottom{
+        display: inline;
+    }
+    .center{
+        display: none;
+    }
+
+    .homenav{
+        margin-top: -6%;
+        margin-left: 10%;
+    }
+    .navbar-collapse{
+        margin-top: -200%;
+        margin-left: 20%;
+    }
+
+    .phonenav{
+        position: fixed;
+        z-index: 1000;
+        text-align: center;
+        display: flex;
+        margin-left: 25%;
+    }
+    .phonenavcont{
+        list-style: none;
+        float: right;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .phonenavcont ul{
+        list-style: none;
+    }
+    .phonenavcont ul li{
+        list-style: none;
         
+    }
+    .phonenavcont ul li a {
+        display: inline;
+        list-style: none;
+        padding: 12px 30px;
+        text-decoration: none;
+    }
+    
+    .material-icons{
+        padding-right: 50px;
+    }
+
+    .fa-heart-o{
+        padding-right: 50px;
+    }
 }         
 
 
@@ -277,6 +364,58 @@ body {
         .logincont{
             display: inline;
         }
+
+        /* Navbar */
+    .center{
+        display: none;
+    }
+
+    .homenav{
+        margin-top: -9%;
+        margin-left: 13%;
+    }
+    .navbar-collapse{
+        margin-top: -200%;
+        margin-left: 20%;
+    }
+
+    .phonenav{
+        position: fixed;
+        z-index: 1000;
+        text-align: center;
+        display: flex;
+        margin-left: 15%;
+    }
+    .phonenavcont{
+        list-style: none;
+        float: right;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .phonenavcont ul{
+        list-style: none;
+    }
+    .phonenavcont ul li{
+        list-style: none;
+        
+    }
+    .phonenavcont ul li a {
+        display: inline;
+        list-style: none;
+        padding: 12px 30px;
+        text-decoration: none;
+    }
+    
+    .material-icons{
+        padding-right: 50px;
+        font-size: 20px;
+    }
+
+    .fa-heart-o{
+        padding-right: 50px;
+        font-size: 20px;
+    }
          
     }
 /* ----------------------------------------------- */
@@ -311,7 +450,59 @@ body {
         .login-playstorebtn{
             display: none;
         }
+                /* Navbar */
+    .center{
+        display: none;
+    }
 
+    .homenav{
+        margin-top: -10%;
+        margin-left: 10%;
+    }
+    
+    .panelpic{
+        margin-left: 20%;
+    }
+    .navbar-collapse{
+        margin-top: -200%;
+        margin-left: 20%;
+    }
+
+    .phonenav{
+        position: fixed;
+        z-index: 1000;
+        text-align: center;
+        display: flex;
+        margin-left: 9%;
+    }
+    .phonenavcont{
+        list-style: none;
+        float: right;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .phonenavcont ul{
+        list-style: none;
+    }
+    .phonenavcont ul li{
+        list-style: none;
+        
+    }
+    .phonenavcont ul li a {
+        display: inline;
+        list-style: none;
+        padding: 12px 30px;
+        text-decoration: none;
+    }
+    
+    .material-icons{
+        padding-right: 50px;
+    }
+
+    .fa-heart-o{
+        padding-right: 50px;
+    }
     }
 
 /* ----------------------------------------------- */

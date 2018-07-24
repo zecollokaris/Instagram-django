@@ -1,0 +1,118 @@
+{% load bootstrap3 %} 
+{% block content %}
+
+
+<div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+
+        
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                </button>
+            
+                <!-- Instagram Left images on nav bar -->
+                <div class="panel-heading">
+                    <div class="col-md-6">
+                        <a href="/">
+                            <img id="panelpic" src="../../static/images/instanav.png" alt="instagram logo on nav-bar " style="width:53px; height:30px;margin-top:5px;margin-left:26px;border-right:1px solid;padding-right: 23px; ">
+                        </a>
+                    </div>
+                </div>
+            
+            
+                <div class="homenav">
+                    <div class="col-md-6">
+                        <a href="/">
+                            <img src="../../static/images/instalogo.svg" alt="Instagram name on nav-bar " style="width:120px; height:30px; margin-left: 50px;">
+                        </a>
+                    </div>
+                </div>
+            
+            
+                <div class="center">
+                    <input style="height:23px;width:200px;margin-top:6px;margin-left:5px" type="text" class="input-sm form-control" name="search-form"
+                        placeholder=" .                Search">
+                </div>
+            </div>
+
+
+
+
+
+            <div class="container">
+
+                <!--COLLAPSE Instagram Left images on nav bar -->
+                
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                
+                        <li>
+                            <a href="#">
+                                <i class="material-icons" style="font-size:25px">public</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-heart-o" style="font-size:25px;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="material-icons" style="font-size:25px;">add_a_photo</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="material-icons" style="font-size:25px">account_circle</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+    </nav>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+        
+            <!--COLLAPSE Instagram Left images on nav bar -->
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="phonenav">
+                <ul class="phonenavcont">
+        
+                    <li>
+                        <a href="#">
+                            <i class="material-icons" style="font-size:26px;padding-top: 14%;">public</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-heart-o" style="font-size:26px;padding-top: 14%;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="material-icons" style="font-size:26px; text-decoration: none;padding-top: 14%;">add_a_photo</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="material-icons" style="font-size:26px;padding-top: 14%;">account_circle</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        
+        
+        </div>
+    </nav>
+</div>
+
+
+{% endblock %}
