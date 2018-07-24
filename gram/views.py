@@ -81,4 +81,25 @@ def login(request):
     return render(request, 'registration/login.html')
     
 #################################################################################################################################################################################
+#UPLOAD PAGE VIEW FUNCTION
+#################################################################################################################################################################################
+
+#Login page view function
+@login_required(login_url='/accounts/login/')
+def upload(request):
+    current_user = request.user
+    p = Profile.objects.filter(id=current_user.id).first()
+    imageuploader_profile = Image.objects.filter(imageuploader_profile=p).all()
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.imageuploader_profile= p
+            post.save()
+            return redirect('/')
+    else:
+        form =PostForm
+    return render(request, 'instaplate/upload.html', {"form": form})
+
+#################################################################################################################################################################################
 #################################################################################################################################################################################
