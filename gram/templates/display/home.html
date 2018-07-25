@@ -21,25 +21,26 @@
         <div class="w3-card-6" style="width:56%">
 
             <div class="container">
-                {% if all_images %} {% for image in all_images %}
+                {% if all_images %} {% for collins in all_images %}
 
                 <div class="imagepadding">
 
                     <!-- BootStrap Class For adding Border arround picture -->
-                    <div class="panel panel-default" style="box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.12);">
+                    <div class="panel panel-primary" style="border-color:rgb(216, 209, 209);box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.12);">
 
                         <!-- SECTION 1 PROFILE & user name -->
 
                         <!-- Profile Picture and User name for account -->
-                        <p style="font-size:15px;margin-top: 15px; margin-left: 3%;">
+                        <p class="circle-dp">
                             <img src="{% static 'images/pic3.jpg' %}" class="img-circle" alt="signuplogo " style="height:32px;width:32px;">
                             <strong> grammer </strong>
                         </p>
 
                         <!-- SECTION 2 (IMAGE) -->
                         <!-- POSTED IMAGE -->
-                        <a href="{{ image.image.url }}" data-lightbox="gallery">
-                            <img src="{{ image.image.url }}" class="img-responsive" style="width:100%;margin-left: 0%;margin-top:15px; ">
+                        <a href="{{ collins.image }}" data-lightbox="gallery">
+                            <img src="{{ collins.image.url }}" class="img-responsive" style="width:100%;margin-left: 0%;margin-top:15px; ">
+                            <h3> {{collins.image_caption}} </h3>
 
                         </a>
 

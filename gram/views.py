@@ -33,9 +33,10 @@ authenticated users
 #Home page view function
 @login_required(login_url='/accounts/login/')
 def index(request):
+    all_images = Image.objects.all()
     next = request.GET.get('next')
     if next: return redirect(next)
-    return render(request, 'display/home.html',)
+    return render(request, 'display/home.html',  {"all_images": all_images})
 
 #################################################################################################################################################################################
 #EXPLORE PAGE VIEW FUNCTION

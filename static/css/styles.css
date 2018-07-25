@@ -1,4 +1,3 @@
-         
 
 /* ######################################################################################### */
 
@@ -105,14 +104,21 @@ body {
                                     }
 
 
-                                    .panel-default{
+                                    .panel-primary{
                                       padding-bottom: 3%;
                                       width: 56%;
-                                      
                                     }
 
                                     .imagepadding{
                                         padding-bottom: 70px;
+                                    }
+
+                                    /* Home Profile pic above post */
+
+                                    .circle-dp{
+                                        font-size: 15px;
+                                        margin-top: 15px;
+                                        margin-left: 3%;
                                     }
 
 
@@ -198,6 +204,12 @@ body {
     .navbar-fixed-bottom{
         display: none;
     }
+
+        /* Home Page Display */
+
+    .panel-primary{
+        width: 56%;
+    }
  }
 
 
@@ -244,11 +256,20 @@ body {
     .navbar-fixed-bottom{
         display: none;
     }
+
+    /* Home Page Display */
+
+    .panel-primary{
+        width: 100%;
+        margin-left: -17%;
+    }
 }
+
+
 
 /* ----------------------------------------------- */
 /* LARGER PHONES */
-@media (max-width:768px ) {
+@media (max-width:767px ) {
            
     .registform{
         font-size: 9px;
@@ -287,8 +308,8 @@ body {
     }
 
     .homenav{
-        margin-top: -6%;
-        margin-left: 10%;
+        margin-top: -5%;
+        margin-left: 7%;
     }
     .navbar-collapse{
         margin-top: -200%;
@@ -331,6 +352,113 @@ body {
 
     .fa-heart-o{
         padding-right: 50px;
+    }
+
+    /* Home Page Display */
+
+    .panel-primary{
+        width: 230%;
+        margin-left: -55%;
+    }
+}         
+
+
+
+
+
+/* ----------------------------------------------- */
+/* LARGER PHONES */
+@media (max-width:700px ) {
+           
+    .registform{
+        font-size: 9px;
+        width: 170%;
+        margin-left: auto;
+        margin-right: auto;
+        }
+    
+    .regplaystorebtn{
+        margin-left: 15%;
+    }
+    .register{
+        margin-left: 10%;
+    }
+    
+
+    /* Login */
+    .login-playstorebtn{
+        display: none;
+    }
+    .loginimage{
+        display: none;
+    }
+    .loginform{
+        width: 170%;
+    }
+
+    /* Navbar */
+
+    .navbar-fixed-bottom{
+        display: inline;
+        box-shadow: 0px 1px 30px 5px rgba(0, 0, 0, 0.12);
+    }
+    .center{
+        display: none;
+    }
+
+    .homenav{
+        margin-top: -6%;
+        margin-left: 7%;
+    }
+    .navbar-collapse{
+        margin-top: -200%;
+        margin-left: 20%;
+        
+    }
+
+    .phonenav{
+        position: fixed;
+        z-index: 1000;
+        text-align: center;
+        display: flex;
+        margin-left: 25%;
+        
+    }
+    .phonenavcont{
+        list-style: none;
+        float: right;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .phonenavcont ul{
+        list-style: none;
+    }
+    .phonenavcont ul li{
+        list-style: none;
+        
+    }
+    .phonenavcont ul li a {
+        display: inline;
+        list-style: none;
+        padding: 12px 30px;
+        text-decoration: none;
+    }
+    
+    .material-icons{
+        padding-right: 50px;
+    }
+
+    .fa-heart-o{
+        padding-right: 50px;
+    }
+
+    /* Home Page Display */
+
+    .panel-primary{
+        width: 265%;
+        margin-left: -73%;
+        margin-top: 14%;
     }
 }         
 
@@ -376,7 +504,7 @@ body {
 
     .homenav{
         margin-top: -9%;
-        margin-left: 13%;
+        margin-left: 9%;
         
     }
     .navbar-collapse{
@@ -423,7 +551,38 @@ body {
         padding-right: 50px;
         font-size: 20px;
     }
-         
+    
+        /* Home Page Display */
+    .panel-primary{
+        width: 338%;
+        margin-left: -112%;
+        margin-top: 14%;
+    }
+
+    }
+
+
+/* ----------------------------------------------- */
+    /* ADDITIONAL MEDIA QUERY */
+
+    @media (max-width:450px ){
+        /* Home Page Display */
+    .panel-default{
+        width: 364%;
+        margin-left: -124%;
+        margin-top: 14%;
+    }
+    }
+/* ----------------------------------------------- */
+    /* ADDITIONAL MEDIA QUERY */
+
+    @media (max-width:400px ){
+        /* Home Page Display */
+    .panel-primary{
+        width: 382%;
+        margin-left: -134%;
+        margin-top: 14%;
+    }
     }
 /* ----------------------------------------------- */
     /* SMALLEST SCREENS */
@@ -511,8 +670,14 @@ body {
     .fa-heart-o{
         padding-right: 50px;
     }
+
+    .panel-primary{
+        width: 382%;
+        margin-left: -134%;
+        margin-top: 14%;
+        border-color: white;
+    }
     
     }
-
-/* ----------------------------------------------- */
+/* ----------------------------------------------- */ 
 /* ######################################################################################### */
