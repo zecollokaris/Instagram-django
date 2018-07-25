@@ -29,7 +29,7 @@ body {
                                     }
 
                                     .loginform{
-                                      width: 70%;
+                                      width: 25%;
                                       margin-left: 3%;
                                       margin-top: 6%;
 
@@ -38,7 +38,6 @@ body {
                                     .login-playstorebtn{
                                       display: flex;
                                       justify-content: center;
-                                      margin-left: -45%;
                                       
                                     }
 
@@ -52,9 +51,9 @@ body {
                                     .regplaystorebtn{
                                         display: flex;
                                         justify-content: center;
-                                        margin-left: -45%;
+
                                         margin-left: auto;
-                                        margin-right: 22%;
+                                        margin-right: auto;
                                     }
 
                                     
@@ -107,6 +106,7 @@ body {
                                     .panel-primary{
                                       padding-bottom: 3%;
                                       width: 56%;
+                                      
                                     }
 
                                     .imagepadding{
@@ -115,10 +115,16 @@ body {
 
                                     /* Home Profile pic above post */
 
-                                    .circle-dp{
+                                    .usernamehome-dp{
                                         font-size: 15px;
                                         margin-top: 15px;
                                         margin-left: 3%;
+                                    }
+                                    
+                                    .circlehome-dp{
+                                        height: 32px;
+                                        width: 32px;
+                                        border-radius: 100%;
                                     }
 
 
@@ -184,17 +190,20 @@ body {
 @media (max-width:1200px ) {
     .registform{
         font-size: 9px;
-        width: 170%;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
         }
 
         /* Login */
     .loginimage{
-        width: 20%;
+        width: 70%;
     }
     
 
     .loginform{
-        width: 100%;
+        width: 30%;
+        margin-left: -20%;
     }
 
     .phonenav{
@@ -220,12 +229,14 @@ body {
 
     .registform{
         font-size: 9px;
-        width: 170%;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
         }
 
         /* Login */
     .loginimage{
-        width: 20%;
+        width: 50%;
     }
     
     .login-playstorebtn{
@@ -233,7 +244,8 @@ body {
     }
 
     .loginform{
-        width: 170%;
+        width: 40%;
+        margin-top: 16%;
     }
 
     /* Nav Bar */
@@ -273,7 +285,7 @@ body {
            
     .registform{
         font-size: 9px;
-        width: 170%;
+        width: 40%;
         margin-left: auto;
         margin-right: auto;
         }
@@ -294,7 +306,7 @@ body {
         display: none;
     }
     .loginform{
-        width: 170%;
+        width: 40%;
     }
 
     /* Navbar */
@@ -372,9 +384,8 @@ body {
            
     .registform{
         font-size: 9px;
-        width: 170%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 170px;
+        margin-left: 25%;
         }
     
     .regplaystorebtn{
@@ -393,7 +404,9 @@ body {
         display: none;
     }
     .loginform{
-        width: 170%;
+        width: 170px;
+        margin-left: auto;
+        margin-right: auto
     }
 
     /* Navbar */
@@ -456,9 +469,15 @@ body {
     /* Home Page Display */
 
     .panel-primary{
-        width: 265%;
-        margin-left: -73%;
+        width: 329%;
+        margin-left: -107%;
         margin-top: 14%;
+    }
+
+    .circlehome-dp{
+        height: 30px;
+        width: 30px;
+        border-radius: 100%;
     }
 }         
 
@@ -470,7 +489,8 @@ body {
         /* Registration */
         .registform{
             font-size: 9px;
-            width: 170%;
+            width: 170px;
+            margin-left: 27%;
             }
         .regplaystorebtn{
             display: none;
@@ -490,7 +510,8 @@ body {
             display: none;
         }
         .loginform{
-            width: 170%;
+            width: 40%;
+            margin-left: 27%;
         }
         .logincont{
             display: inline;
@@ -559,6 +580,12 @@ body {
         margin-top: 14%;
     }
 
+    .circlehome-dp{
+        height: 29px;
+        width: 29px;
+        border-radius: 100%;
+    }
+
     }
 
 
@@ -567,7 +594,7 @@ body {
 
     @media (max-width:450px ){
         /* Home Page Display */
-    .panel-default{
+    .panel-primary{
         width: 364%;
         margin-left: -124%;
         margin-top: 14%;
@@ -583,6 +610,12 @@ body {
         margin-left: -134%;
         margin-top: 14%;
     }
+
+    .circlehome-dp{
+        height: 28px;
+        width: 28px;
+        border-radius: 100%;
+    }
     }
 /* ----------------------------------------------- */
     /* SMALLEST SCREENS */
@@ -592,7 +625,8 @@ body {
         /* Registration */
         .registform{
             font-size: 9px;
-            width: 170%;
+            width: 40%;
+            margin-left: 27%;
             }
         .regplaystorebtn{
             display: none;
@@ -610,7 +644,8 @@ body {
         }
 
         .loginform{
-            width: 170%;
+            width: 40%;
+            margin-left: 27%
         }
 
         .login-playstorebtn{
@@ -670,14 +705,17 @@ body {
     .fa-heart-o{
         padding-right: 50px;
     }
-
+    
     .panel-primary{
         width: 382%;
         margin-left: -134%;
         margin-top: 14%;
-        border-color: white;
     }
-    
+    .circlehome-dp{
+        height: 26px;
+        width: 26px;
+        border-radius: 100%;
+    }
     }
 /* ----------------------------------------------- */ 
 /* ######################################################################################### */
