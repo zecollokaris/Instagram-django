@@ -26,22 +26,26 @@
                 <div class="imagepadding">
 
                     <!-- BootStrap Class For adding Border arround picture -->
-                    <div class="panel panel-primary" style="border-color:rgb(216, 209, 209);">
+                    <div class="panel panel-primary">
 
                         <!-- SECTION 1 PROFILE & user name -->
 
                         <!-- Profile Picture and User name for account -->
+                        
                         <p class="usernamehome-dp">
                             <img src="{% static 'images/pic3.jpg' %}" class="circlehome-dp" alt="signuplogo ">
-                            <strong> grammer </strong>
-                        </p>
+                         {% if all_users %} {% for user in all_users %}
+                            <strong> "{{user.user}}" </strong>
+                        {% endfor %}{% else %}
+                        There are no users
 
+                        {% endif %}
+                        </p>
+                       
                         <!-- SECTION 2 (IMAGE) -->
                         <!-- POSTED IMAGE -->
                         <a href="{{ collins.image }}" data-lightbox="gallery">
                             <img src="{{ collins.image.url }}" class="img-responsive" style="width:100%;margin-left: 0%;margin-top:15px; ">
-                            <h3> {{collins.image_caption}} </h3>
-
                         </a>
 
                         <!--Like & Comment Section -->
@@ -50,13 +54,14 @@
 
                                 <span class="like-row">
                                     {% if liked %}
-                                    <img src="{% static 'images/liked.png' %}" style="height: 20px;width: 20px;" alt="liked picture"> {% else %}
-                                    <img src="{% static 'images/liked.png' %}" style="height: 29px;width: 29px;" alt="not likedpicture"> {% endif %}
-                                    <img id='comment-icon' src="../../static/images/comment.png" style="height: 32px;width: 29px; margin-left: 5%;margin-top: -30px;"
+                                    <img class"likedhrt" src="{% static 'images/liked.png' %}" alt="liked picture"> {% else %}
+                                    <img class="likehrt" src="{% static 'images/liked.png' %}" alt="not likedpicture"> {% endif %}
+                                    <img class="commenthrt" id='comment-icon' src="../../static/images/comment.png" style="height: 32px;width: 29px; margin-left: 4%;margin-top: -30px;"
                                         class="img-responsive" alt="Image">
                                     </p>
                                 </span>
-
+                        <!-- Caption Section -->
+                                <p> {{collins.image_caption}} </p>
                             </div>
                         </div>
 

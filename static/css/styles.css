@@ -93,7 +93,7 @@ body {
 
 
                                     .homebody{
-                                      margin-top: 10%;
+                                      margin-top: 13%;
                                       margin-left: 25%;
 
                                     }
@@ -106,7 +106,7 @@ body {
                                     .panel-primary{
                                       padding-bottom: 3%;
                                       width: 56%;
-                                      
+                                      border-color: rgb(216, 209, 209)!important;
                                     }
 
                                     .imagepadding{
@@ -176,7 +176,15 @@ body {
                                       margin-top: 1%;
                                       margin-left: 1%;
                                     }
-
+                                    .likedhrt{
+                                        height: 18px;
+                                        width: 18px;
+                                    }
+                                    .likehrt{
+                                        height: 30px;
+                                        width: 29px;
+                                    }
+                                    
 
 /* ######################################################################################### */
 
@@ -472,14 +480,23 @@ body {
         width: 329%;
         margin-left: -107%;
         margin-top: 14%;
+        border-color: #ffffff00!important;
     }
 
     .circlehome-dp{
         height: 30px;
         width: 30px;
-        border-radius: 100%;
+        border-color: 100%;
+    }
+    .usernamehome-dp{
+        font-size: 15px;
+        margin-top: 15px;
+        margin-bottom: -1%;
+        margin-left: 3%;
+        font-size: 13px
     }
 }         
+
 
 
 /* ----------------------------------------------- */
@@ -585,7 +602,9 @@ body {
         width: 29px;
         border-radius: 100%;
     }
-
+    .imagepadding{
+        padding-bottom: 1px;
+    }
     }
 
 
