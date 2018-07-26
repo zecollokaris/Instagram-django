@@ -37,7 +37,7 @@
                          {% if all_users %} {% for user in all_users %}
                             <strong> "{{user.user}}" </strong>
                         {% endfor %}{% else %}
-                        There are no users
+                        <strong>grammer</strong>
 
                         {% endif %}
                         </p>
@@ -54,14 +54,21 @@
 
                                 <span class="like-row">
                                     {% if liked %}
-                                    <img class"likedhrt" src="{% static 'images/liked.png' %}" alt="liked picture"> {% else %}
-                                    <img class="likehrt" src="{% static 'images/liked.png' %}" alt="not likedpicture"> {% endif %}
-                                    <img class="commenthrt" id='comment-icon' src="../../static/images/comment.png" style="height: 34px;width: 29px; margin-left: 1%;"
-                                        class="img-responsive" alt="Image">
+                                    <img class"likedhrt" src="{% static 'images/liked.png' %}" alt="liked picture"class="img-responsive"> {% else %}
+                                    <img class="likehrt" src="{% static 'images/liked.png' %}" alt="not likedpicture" class="img-responsive"> {% endif %}
+                                    <img class="commenthrt" id='comment-icon' src="../../static/images/comment.png"class="img-responsive" alt=" commentImage">
+                                    <img class="savehrt" src="{% static 'images/unsaved.png' %}" alt="save picture">
+                                        
                                     </p>
                                 </span>
+                                
                         <!-- Caption Section -->
-                                <p> {{collins.image_caption}} </p>
+                        {% if all_users %} {% for user in all_users %}
+                        <strong> "{{user.user}}" </strong>
+                        {% endfor %}{% else %}
+                        <p><strong>grammer</strong> {{collins.image_caption}}</p>
+                        
+                        {% endif %} 
                             </div>
                         </div>
 

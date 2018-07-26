@@ -9,7 +9,6 @@ body {
 
 }
 
-
 /* ######################################################################################### */
                                     /* Login In & Registration Form */
 
@@ -183,6 +182,18 @@ body {
                                     .likehrt{
                                         height: 29px;
                                         width: 29px;
+                                    }
+                                    
+                                    .commenthrt{
+                                        height: 34px;
+                                        width: 29px;
+                                        margin-left: 1%;
+                                    }
+
+                                    .savehrt{
+                                        height: 28px;
+                                        width: 30px;
+                                        margin-left: 42%;
                                     }
                                     
 
