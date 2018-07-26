@@ -112,10 +112,8 @@ class Comments (models.Model):
 class Like (models.Model):
 #Attribute Variables for Like class to represent different columns in database
     '''
-    -comment-: this is the commentstext which will be uploaded
-    -author-: this is the writer of the comment
-    -commented_image-: this is the image that has been commented on
-    date-: this is the date the comment was posted
+    -post-: this is posted image being liked
+    -user-: this is the user liking the post
     '''
     post = models.ForeignKey('Image', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
