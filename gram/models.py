@@ -1,7 +1,7 @@
+from django.db import models
+
 #Import User method for django
 from django.contrib.auth.models import User
-
-from django.db import models
 
 #Importing date method
 import datetime
@@ -57,6 +57,8 @@ class Image(models.Model):
     foreign key,-which is then linked to imported user at the top (for ease in querying the database the image creator
     is used which is linked directly to user)
 
+    -image_likes-: This is attribute created with a (ManyToManyField)-to allow many users to like one picture
+
     -image_comments-: This is attribute created with a (ManyToManyField)-to allow many users to comment on one picture and still get their profiles
 
     -date-: imported as a django relative import ('from django.contrib.auth.models import User'))
@@ -67,7 +69,8 @@ class Image(models.Model):
     image = models.ImageField(upload_to ='pictsagram/')
     image_caption = models.CharField(max_length=700)
     tag_someone = models.CharField(max_length=50,blank=True)
-    imageuploader_profile = models.ForeignKey('Profile', on_delete=models.CASCADE,null='True', blank=True)
+    imageuploader_profile = models.ForeignKey(User, on_delete=models.CASCADE,null='True', blank=True)
+    image_likes = models.ManyToManyField('Profile', default=False, blank=True, related_name='likes')
     date = models.DateTimeField(auto_now_add=True, null= True)
 
     '''Method to filter database results'''
@@ -103,21 +106,4 @@ class Comments (models.Model):
 
 
 #################################################################################################################################################################################################################################
-
-
-
-#...Class Likes added here...
-
-
-class Like (models.Model):
-#Attribute Variables for Like class to represent different columns in database
-    '''
-    -post-: this is posted image being liked
-    -user-: this is the user liking the post
-    '''
-
-
-
-#################################################################################################################################################################################################################################
-
 
