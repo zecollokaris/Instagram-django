@@ -61,7 +61,9 @@
                                         
                                     </p>
                                 </span>
-                                
+                                {% if post.get_number_of_likes %}
+                                {{ post.get_number_of_likes }} like{% if post.get_number_of_likes > 1 %}s{% endif %}
+                            {% endif %}
                         <!-- Caption Section -->
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
