@@ -115,17 +115,6 @@ class Like (models.Model):
     -post-: this is posted image being liked
     -user-: this is the user liking the post
     '''
-    post = models.ForeignKey('Image', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together =("post","user")
-
-
-    '''Method to filter database results'''
-    def __str__(self):
-        return 'Like' + self.user.username + '' + self.post.title
-    
 
 
 
