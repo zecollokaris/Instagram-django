@@ -87,4 +87,4 @@ Collins Kariuki
 -Email Address: collo.kariss@gmail.com
 -github: zecollokaris
 
-Collins Kariuki - MIT (c)2018 LICENCE
+Collins Kariuki - MIT (c)2018 LICENSE
