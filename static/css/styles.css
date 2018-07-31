@@ -6,7 +6,6 @@
 /*Text body*/
 
 body {
-
 }
 
 /* ######################################################################################### */
@@ -103,7 +102,6 @@ body {
 
 
                                     .panel-primary{
-                                      padding-bottom: 3%;
                                       width: 56%;
                                       border-color: rgb(216, 209, 209)!important;
                                     }
@@ -195,8 +193,26 @@ body {
                                         width: 30px;
                                         margin-left: 42%;
                                     }
-                                    
-
+                                    .commentsection{
+                                        position: relative;
+                                        border-top: 1px solid #efefef;
+                                        width: 51%;
+                                        padding: 20px 26px 20px 0;
+                                        margin-top: 4px;
+                                        overflow: hidden;
+                                    }
+                                    #cmnt{
+                                        outline: none;
+                                        overflow-x: scroll;
+                                        padding: 0;
+                                        background: none;
+                                        border: none;
+                                        color: #999;
+                                        width: 100%;
+                                        height: 18px;
+                                        max-height: 80px;
+                                        resize: none;
+                                    }
 /* ######################################################################################### */
 
 
@@ -293,6 +309,26 @@ body {
     .panel-primary{
         width: 100%;
         margin-left: -17%;
+    }
+    /* Like and Comment Section */
+    .commentsection{
+        width: 94%;
+    }
+
+    .likehrt{
+        height: 25px;
+        width: 25px;
+    }
+    
+    .commenthrt{
+        height: 31px;
+        width: 25px;
+        margin-left: 1%;
+    }
+    .savehrt{
+        height: 25px;
+        width: 26px;
+        margin-left: 81%;
     }
 }
 
@@ -391,11 +427,28 @@ body {
         width: 230%;
         margin-left: -55%;
     }
+    /* Like and Comment Section */
+    .commentsection{
+        width: 98%;
+        padding: 16px 26px 16px 0;
+    }
+    .likehrt{
+        height: 24px;
+        width: 24px;
+    }
+    
+    .commenthrt{
+        height: 30px;
+        width: 24px;
+        margin-left: 1%;
+    }
+    .savehrt{
+        height: 25px;
+        width: 26px;
+        margin-left: 82%;
+    }
+    
 }         
-
-
-
-
 
 /* ----------------------------------------------- */
 /* LARGER PHONES */
@@ -488,8 +541,8 @@ body {
     /* Home Page Display */
 
     .panel-primary{
-        width: 329%;
-        margin-left: -107%;
+        width: 306%;
+        margin-left: -95%;
         margin-top: 14%;
         border-color: #ffffff00!important;
     }
@@ -506,8 +559,161 @@ body {
         margin-left: 3%;
         font-size: 13px
     }
+
+    /* Comment section */
+    .commentsection{
+        width: 99%;
+        padding: 14px 26px 14px 0;
+    }
+    .likehrt{
+        height: 23px;
+        width: 23px;
+    }
+    
+    .commenthrt{
+        height: 29px;
+        width: 23px;
+        margin-left: 1%;
+    }
+    .savehrt{
+        height: 24px;
+        width: 25px;
+        margin-left: 84%;
+    }
 }         
 
+
+/* ----------------------------------------------- */
+/* LARGER PHONES */
+@media (max-width:600px ) {
+           
+    .registform{
+        font-size: 9px;
+        width: 170px;
+        margin-left: 25%;
+        }
+    
+    .regplaystorebtn{
+        margin-left: 15%;
+    }
+    .register{
+        margin-left: 10%;
+    }
+    
+
+    /* Login */
+    .login-playstorebtn{
+        display: none;
+    }
+    .loginimage{
+        display: none;
+    }
+    .loginform{
+        width: 170px;
+        margin-left: auto;
+        margin-right: auto
+    }
+
+    /* Navbar */
+
+    .navbar-fixed-bottom{
+        display: inline;
+        box-shadow: 0px 1px 30px 5px rgba(0, 0, 0, 0.12);
+    }
+    .center{
+        display: none;
+    }
+
+    .homenav{
+        margin-top: -6%;
+        margin-left: 7%;
+    }
+    .navbar-collapse{
+        margin-top: -200%;
+        margin-left: 20%;
+        
+    }
+
+    .phonenav{
+        position: fixed;
+        z-index: 1000;
+        text-align: center;
+        display: flex;
+        margin-left: 25%;
+        
+    }
+    .phonenavcont{
+        list-style: none;
+        float: right;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .phonenavcont ul{
+        list-style: none;
+    }
+    .phonenavcont ul li{
+        list-style: none;
+        
+    }
+    .phonenavcont ul li a {
+        display: inline;
+        list-style: none;
+        padding: 12px 30px;
+        text-decoration: none;
+    }
+    
+    .material-icons{
+        padding-right: 50px;
+    }
+
+    .fa-heart-o{
+        padding-right: 50px;
+    }
+
+    /* Home Page Display */
+
+    .panel-primary{
+        width: 323%;
+        margin-left: -105%;
+        margin-top: 14%;
+        border-color: #ffffff00!important;
+    }
+
+    .circlehome-dp{
+        height: 30px;
+        width: 30px;
+        border-color: 100%;
+    }
+    .usernamehome-dp{
+        font-size: 15px;
+        margin-top: 15px;
+        margin-bottom: -1%;
+        margin-left: 3%;
+        font-size: 13px
+    }
+    /* Comment section */
+
+    .commentsection{
+        width: 99%;
+        padding: 13px 26px 13px 0;
+    }
+    .likehrt{
+        height: 22px;
+        width: 22px;
+    }
+    
+    .commenthrt{
+        height: 26px;
+        width: 22px;
+        margin-left: 1%;
+    }
+    .savehrt{
+        height: 22px;
+        width: 25px;
+        margin-left: 81%;
+    }
+}   
 
 
 /* ----------------------------------------------- */
@@ -616,6 +822,16 @@ body {
     .imagepadding{
         padding-bottom: 1px;
     }
+    .commentsection{
+        width: 99%;
+        padding: 10px 26px 10px 0;
+    }
+    /* Comment Section */
+    .savehrt{
+        height: 21px;
+        width: 22px;
+        margin-left: 79%;
+    }
     }
 
 
@@ -628,6 +844,15 @@ body {
         width: 364%;
         margin-left: -124%;
         margin-top: 14%;
+    }
+    .commentsection{
+        display: none;
+    }
+    /* Like & Comment Section */
+    .savehrt{
+        height: 21px;
+        width: 22px;
+        margin-left: 77%;
     }
     }
 /* ----------------------------------------------- */
@@ -645,6 +870,12 @@ body {
         height: 28px;
         width: 28px;
         border-radius: 100%;
+    }
+        /*Like & Comment Section */
+    .savehrt{
+        height: 20px;
+        width: 21px;
+        margin-left: 76%;
     }
     }
 /* ----------------------------------------------- */
@@ -745,6 +976,12 @@ body {
         height: 26px;
         width: 26px;
         border-radius: 100%;
+    }
+            /*Like & Comment Section */
+    .savehrt{
+        height: 21px;
+        width: 22px;
+        margin-left: 72%;
     }
     }
 /* ----------------------------------------------- */ 

@@ -41,7 +41,7 @@ class Profile(models.Model):
 
     '''Method to filter database results'''
     def __str__(self):
-        return self.user.user
+        return self.profile.user
 
 
 

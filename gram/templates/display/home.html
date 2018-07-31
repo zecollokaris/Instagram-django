@@ -61,9 +61,7 @@
                                         
                                     </p>
                                 </span>
-                                {% if post.get_number_of_likes %}
-                                {{ post.get_number_of_likes }} like{% if post.get_number_of_likes > 1 %}s{% endif %}
-                            {% endif %}
+                                <p><strong>5 likes</strong> </p>
                         <!-- Caption Section -->
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
@@ -71,6 +69,11 @@
                         <p><strong>grammer</strong> {{collins.image_caption}}</p>
                         
                         {% endif %} 
+
+                        <div class='commentsection'>
+                            <input type='text' id='cmnt' placeholder='Add a comment...'>
+                            <span class='dot02'></span>
+                        </div>
                             </div>
                         </div>
 
