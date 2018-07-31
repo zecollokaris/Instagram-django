@@ -74,6 +74,7 @@ Collins Kariuki
 #{follow the above instructions for set up}
 
 #Technologies Used
+
 -HTML5
 -CSS
 -Bootstarap
@@ -81,6 +82,9 @@ Collins Kariuki
 -Django
 
 #Contact
+
 -Mobile number: (254) 798731203
 -Email Address: collo.kariss@gmail.com
 -github: zecollokaris
+
+Collins Kariuki - MIT (c)2018 LICENCE
