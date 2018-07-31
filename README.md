@@ -10,3 +10,24 @@ Collins Kariuki
 
 -You need to have (python3.6) installed in your machine
 
+# Setup/Installation Requirements
+
+-Internet connection
+
+-webpage URL:
+
+-To get to this webpage fist you need to get to my github repository
+
+-The link to my github Repository is: https://github.com/zecollokaris
+
+-from there you can access the work
+
+-git clone project link
+
+-install dependancies in requirements.txt file
+
+-cd into project
+
+-source virtual/bin/activate
+
+-Run The Project-: (python manage.py runserver)
