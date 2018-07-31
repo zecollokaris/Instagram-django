@@ -31,3 +31,13 @@ Collins Kariuki
 -source virtual/bin/activate
 
 -Run The Project-: (python manage.py runserver)
+
+#{follow the above instructions for set up}
+
+#Technologies Used
+-HTML5
+-CSS
+-Bootstarap
+-Python3.6
+-Django
+
