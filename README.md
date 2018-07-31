@@ -41,3 +41,7 @@ Collins Kariuki
 -Python3.6
 -Django
 
+#Contact
+-Mobile number: (254) 798731203
+-Email Address: collo.kariss@gmail.com
+-github: zecollokaris
