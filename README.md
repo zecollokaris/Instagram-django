@@ -1,6 +1,45 @@
+
+
+#                                                    INSTAGRAM.
+
+
+#                                                  WEBSITE DSPLAY.
+# Website Layout
+
+
+## This is to Show the page is responsive and to also show the layout design
+
+
+## - Full Screen layout
+
+![](spec.md/Disp7.png)
+
+
+## - Mid Size Full Screen layout
+
+![](spec.md/Disp6.png)
+
+
+
+## - Mid Size Screen
+
+![](spec.md/Disp5.png)
+
+![](spec.md/Disp2.png)
+
+## - Phone Screen Layout
+##     Large Phone Screen
+
+![](spec.md/Disp3.png)
+![](spec.md/Disp1.png)
+
+## - Small Phone Screen
+
+![](spec.md/Disp4.png)
+
 #  PROJECT DESCRIPTION
 
-## In plain simple terms this is an Instagram-clone A gallery application that you display your photos for others to see.
+## In plain simple terms this is an Instagram-clone A photo application that you Display your photos for others to see.
 
 ## Author
 Collins Kariuki
