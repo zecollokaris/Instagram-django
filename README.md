@@ -63,9 +63,11 @@ Collins Kariuki
 
 -git clone project link
 
--install dependancies in requirements.txt file
+-install dependancies in requirements.txt file pip install -r requirements.txt
 
 -cd into project
+
+-create a virtual environment python3.6 -m venv virtual
 
 -source virtual/bin/activate
 
@@ -86,5 +88,6 @@ Collins Kariuki
 -Mobile number: (254) 798731203
 -Email Address: collo.kariss@gmail.com
 -github: zecollokaris
+
 
 Collins Kariuki - MIT (c)2018 LICENSE
