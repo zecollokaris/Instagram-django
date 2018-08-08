@@ -3,7 +3,7 @@
 #                                                    INSTAGRAM.
 
 
-#                                                  WEBSITE DSPLAY.
+#                                                  WEBSITE DISPLAY.
 # Website Layout
 
 
@@ -49,6 +49,16 @@ Collins Kariuki
 
 -You need to have (python3.6) installed in your machine
 
+-Python3.6. Installation ($ sudo apt-get install python3.6).
+
+-Django1.11. Installation ($ pip install django==1.11).
+
+-Psycopg2. Installation ($ pip install psycopg2).
+
+-Bootstrap3. Installation ($ pip install django-bootstrap3).
+
+-Pillow. Installation ($ pip install pillow).
+
 # Setup/Installation Requirements
 
 -Internet connection
@@ -59,19 +69,19 @@ Collins Kariuki
 
 -The link to my github Repository is: https://github.com/zecollokaris
 
--from there you can access the work
+-from there you can access the project
 
--git clone project link
+-git clone project.
 
 -install dependancies in requirements.txt file pip install -r requirements.txt
 
 -cd into project
 
--create a virtual environment python3.6 -m venv virtual
+-create a virtual environment ($ python3.6 -m venv virtual)
 
--source virtual/bin/activate
+-Activate Virtual Environmrnt. ($ source virtual/bin/activate)
 
--Run The Project-: (python manage.py runserver)
+-Run The Project-: ($ python manage.py runserver)
 
 #{follow the above instructions for set up}
 
@@ -81,7 +91,9 @@ Collins Kariuki
 -CSS
 -Bootstarap
 -Python3.6
--Django
+-Django 2.0.7
+-Psycopg2
+-PostgreSQL
 
 #Contact
 
@@ -89,5 +101,5 @@ Collins Kariuki
 -Email Address: collo.kariss@gmail.com
 -github: zecollokaris
 
-
+## License
 Collins Kariuki - MIT (c)2018 LICENSE
